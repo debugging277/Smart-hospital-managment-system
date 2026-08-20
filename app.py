@@ -7,6 +7,7 @@ from fastapi import FastAPI, Request, Form, Depends, HTTPException, Body
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from contextlib import asynccontextmanager
 import os
 import json
 from datetime import datetime
@@ -23,8 +24,20 @@ from database import (
 from seed_data import seed_database
 import ai_engine
 
-# Initialize App & Seed DB on startup
-app = FastAPI(title="St. Metropolitan Hospital Management System", version="2.6.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize DB schema & seed data on startup
+    init_db()
+    seed_database()
+    yield
+
+
+app = FastAPI(
+    title="St. Metropolitan Hospital Management System",
+    version="2.6.0",
+    lifespan=lifespan
+)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
@@ -34,44 +47,52 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 
-@app.on_event("startup")
-def on_startup():
-    init_db()
-    seed_database()
-
-
 # ==========================================
 # Frontend HTML Page Routes
 # ==========================================
 
-@app.get("/", response_class=HTMLResponse)
+@app.api_route("/", methods=["GET", "HEAD"], response_class=HTMLResponse)
 async def dashboard_page(request: Request):
+    if request.method == "HEAD":
+        return HTMLResponse(status_code=200)
+
     metrics = get_dashboard_metrics()
     today_str = datetime.now().strftime("%Y-%m-%d")
     appointments = get_all_appointments(date_filter=today_str)
     if not appointments:
         appointments = get_all_appointments()[:6]
 
-    return templates.TemplateResponse("dashboard.html", {
-        "request": request,
-        "active_page": "dashboard",
-        "metrics": metrics,
-        "appointments": appointments,
-        "total_patients": metrics["total_patients"]
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="dashboard.html",
+        context={
+            "active_page": "dashboard",
+            "metrics": metrics,
+            "appointments": appointments,
+            "total_patients": metrics["total_patients"]
+        }
+    )
+
+
+@app.get("/healthz")
+async def health_check():
+    return {"status": "healthy", "service": "hospital-management-system"}
 
 
 @app.get("/patients", response_class=HTMLResponse)
 async def patients_page(request: Request, status: Optional[str] = None, search: Optional[str] = None):
     patients = get_all_patients(search=search or "", status_filter=status or "")
     metrics = get_dashboard_metrics()
-    return templates.TemplateResponse("patients.html", {
-        "request": request,
-        "active_page": "patients",
-        "patients": patients,
-        "current_filter": status,
-        "total_patients": metrics["total_patients"]
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="patients.html",
+        context={
+            "active_page": "patients",
+            "patients": patients,
+            "current_filter": status,
+            "total_patients": metrics["total_patients"]
+        }
+    )
 
 
 @app.get("/appointments", response_class=HTMLResponse)
@@ -84,29 +105,35 @@ async def appointments_page(request: Request, status: Optional[str] = None, doct
     metrics = get_dashboard_metrics()
     today_str = datetime.now().strftime("%Y-%m-%d")
 
-    return templates.TemplateResponse("appointments.html", {
-        "request": request,
-        "active_page": "appointments",
-        "appointments": appointments,
-        "patients": patients,
-        "doctors": doctors,
-        "current_status": status,
-        "today_date": today_str,
-        "total_patients": metrics["total_patients"]
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="appointments.html",
+        context={
+            "active_page": "appointments",
+            "appointments": appointments,
+            "patients": patients,
+            "doctors": doctors,
+            "current_status": status,
+            "today_date": today_str,
+            "total_patients": metrics["total_patients"]
+        }
+    )
 
 
 @app.get("/doctors", response_class=HTMLResponse)
 async def doctors_page(request: Request, dept: Optional[str] = None):
     doctors = get_all_doctors(department=dept or "")
     metrics = get_dashboard_metrics()
-    return templates.TemplateResponse("doctors.html", {
-        "request": request,
-        "active_page": "doctors",
-        "doctors": doctors,
-        "current_dept": dept,
-        "total_patients": metrics["total_patients"]
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="doctors.html",
+        context={
+            "active_page": "doctors",
+            "doctors": doctors,
+            "current_dept": dept,
+            "total_patients": metrics["total_patients"]
+        }
+    )
 
 
 @app.get("/beds", response_class=HTMLResponse)
@@ -131,18 +158,21 @@ async def beds_page(request: Request, ward: Optional[str] = None):
     outpatients = [p for p in all_p if p["admission_status"] != "Admitted"]
     metrics = get_dashboard_metrics()
 
-    return templates.TemplateResponse("beds.html", {
-        "request": request,
-        "active_page": "beds",
-        "beds": beds,
-        "wards": wards,
-        "occupied_count": occupied_count,
-        "available_count": available_count,
-        "icu_total": icu_total,
-        "icu_occupied": icu_occupied,
-        "outpatient_list": outpatients,
-        "total_patients": metrics["total_patients"]
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="beds.html",
+        context={
+            "active_page": "beds",
+            "beds": beds,
+            "wards": wards,
+            "occupied_count": occupied_count,
+            "available_count": available_count,
+            "icu_total": icu_total,
+            "icu_occupied": icu_occupied,
+            "outpatient_list": outpatients,
+            "total_patients": metrics["total_patients"]
+        }
+    )
 
 
 @app.get("/prescriptions", response_class=HTMLResponse)
@@ -152,17 +182,20 @@ async def prescriptions_page(request: Request, patient_id: Optional[int] = None,
     doctors = get_all_doctors()
     metrics = get_dashboard_metrics()
 
-    return templates.TemplateResponse("prescriptions.html", {
-        "request": request,
-        "active_page": "prescriptions",
-        "prescriptions": prescriptions,
-        "patients": patients,
-        "doctors": doctors,
-        "preselected_patient": patient_id,
-        "preselected_doctor": doctor_id,
-        "appointment_id": appointment_id,
-        "total_patients": metrics["total_patients"]
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="prescriptions.html",
+        context={
+            "active_page": "prescriptions",
+            "prescriptions": prescriptions,
+            "patients": patients,
+            "doctors": doctors,
+            "preselected_patient": patient_id,
+            "preselected_doctor": doctor_id,
+            "appointment_id": appointment_id,
+            "total_patients": metrics["total_patients"]
+        }
+    )
 
 
 @app.get("/pharmacy", response_class=HTMLResponse)
@@ -171,14 +204,17 @@ async def pharmacy_page(request: Request, cat: Optional[str] = None, search: Opt
     low_stock = sum(1 for m in medicines if m["stock"] <= m["min_threshold"])
     metrics = get_dashboard_metrics()
 
-    return templates.TemplateResponse("pharmacy.html", {
-        "request": request,
-        "active_page": "pharmacy",
-        "medicines": medicines,
-        "current_cat": cat,
-        "low_stock_count": low_stock,
-        "total_patients": metrics["total_patients"]
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="pharmacy.html",
+        context={
+            "active_page": "pharmacy",
+            "medicines": medicines,
+            "current_cat": cat,
+            "low_stock_count": low_stock,
+            "total_patients": metrics["total_patients"]
+        }
+    )
 
 
 @app.get("/billing", response_class=HTMLResponse)
@@ -189,25 +225,31 @@ async def billing_page(request: Request):
     pending_total = sum(b["total_amount"] for b in bills if b["payment_status"] == "Pending")
     metrics = get_dashboard_metrics()
 
-    return templates.TemplateResponse("billing.html", {
-        "request": request,
-        "active_page": "billing",
-        "bills": bills,
-        "patients": patients,
-        "paid_total": paid_total,
-        "pending_total": pending_total,
-        "total_patients": metrics["total_patients"]
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="billing.html",
+        context={
+            "active_page": "billing",
+            "bills": bills,
+            "patients": patients,
+            "paid_total": paid_total,
+            "pending_total": pending_total,
+            "total_patients": metrics["total_patients"]
+        }
+    )
 
 
 @app.get("/ai-tools", response_class=HTMLResponse)
 async def ai_tools_page(request: Request):
     metrics = get_dashboard_metrics()
-    return templates.TemplateResponse("ai_tools.html", {
-        "request": request,
-        "active_page": "ai-tools",
-        "total_patients": metrics["total_patients"]
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="ai_tools.html",
+        context={
+            "active_page": "ai-tools",
+            "total_patients": metrics["total_patients"]
+        }
+    )
 
 
 # ==========================================
