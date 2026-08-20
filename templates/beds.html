@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block page_title %}Hospital Wards & Bed Matrix{% endblock %}
+{% block page_subtitle %}Real-time visual bed layout, occupancy management, and patient admission/discharge{% endblock %}
+
+{% block content %}
+<!-- Ward Summary Filter & Stats -->
+<div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+    <div class="stat-card blue">
+        <div class="stat-content">
+            <div class="stat-label">Total Beds</div>
+            <div class="stat-value">{{ beds|length }}</div>
+            <div class="stat-sub">Across 6 Wards</div>
+        </div>
+    </div>
+    <div class="stat-card red">
+        <div class="stat-content">
+            <div class="stat-label">Occupied Beds</div>
+            <div class="stat-value">{{ occupied_count }}</div>
+            <div class="stat-sub">Active Inpatients</div>
+        </div>
+    </div>
+    <div class="stat-card green">
+        <div class="stat-content">
+            <div class="stat-label">Available Beds</div>
+            <div class="stat-value">{{ available_count }}</div>
+            <div class="stat-sub">Ready for Admission</div>
+        </div>
+    </div>
+    <div class="stat-card amber">
+        <div class="stat-content">
+            <div class="stat-label">ICU Utilization</div>
+            <div class="stat-value">{{ icu_occupied }}/{{ icu_total }}</div>
+            <div class="stat-sub">Critical Care Beds</div>
+        </div>
+    </div>
+</div>
+
+<!-- Visual Beds Grouped By Ward -->
+{% for ward_name, ward_beds in wards.items() %}
+<div class="ward-section">
+    <div class="ward-header">
+        <div class="ward-title">
+            {% if 'ICU' in ward_name %}
+            <i class="fas fa-heartbeat" style="color:var(--danger);"></i>
+            {% elif 'Emergency' in ward_name %}
+            <i class="fas fa-ambulance" style="color:#f59e0b;"></i>
+            {% elif 'VIP' in ward_name %}
+            <i class="fas fa-crown" style="color:#8b5cf6;"></i>
+            {% elif 'Maternity' in ward_name %}
+            <i class="fas fa-baby-carriage" style="color:#ec4899;"></i>
+            {% else %}
+            <i class="fas fa-hospital-alt" style="color:var(--primary);"></i>
+            {% endif %}
+            <span>{{ ward_name }}</span>
+            <span style="font-size:0.8rem; font-weight:normal; color:var(--slate-500); margin-left:8px;">
+                (${{ "%.2f"|format(ward_beds[0].daily_rate) }}/day • {{ ward_beds[0].floor }})
+            </span>
+        </div>
+        <div>
+            <span class="badge badge-slate">{{ ward_beds|length }} Beds</span>
+        </div>
+    </div>
+
+    <div class="beds-grid">
+        {% for b in ward_beds %}
+        <div class="bed-card {% if b.status == 'Available' %}available{% elif b.status == 'Occupied' %}{% if 'ICU' in ward_name %}icu-occupied{% else %}occupied{% endif %}{% else %}maintenance{% endif %}">
+            <div class="bed-top">
+                <div class="bed-number">{{ b.bed_number }}</div>
+                <span class="badge {% if b.status == 'Available' %}badge-success{% elif b.status == 'Occupied' %}{% if 'ICU' in ward_name %}badge-danger{% else %}badge-primary{% endif %}{% else %}badge-warning{% endif %}">
+                    {{ b.status }}
+                </span>
+            </div>
+
+            {% if b.status == 'Occupied' and b.patient_name %}
+            <div class="bed-patient-info">
+                <div style="font-weight:700; color:var(--slate-900);">{{ b.patient_name }}</div>
+                <div style="font-size:0.75rem; color:var(--slate-500);">
+                    UID: {{ b.patient_uid }} • {{ b.patient_age }}y ({{ b.patient_gender }})
+                </div>
+                <div style="font-size:0.72rem; color:var(--slate-600); margin-top:3px;">
+                    <i class="fas fa-tint" style="color:var(--danger);"></i> Blood: <strong>{{ b.patient_blood_group or 'N/A' }}</strong>
+                </div>
+                {% if b.admitted_at %}
+                <div style="font-size:0.7rem; color:var(--slate-400); margin-top:2px;">
+                    <i class="fas fa-clock"></i> Admitted: {{ b.admitted_at[:10] }}
+                </div>
+                {% endif %}
+            </div>
+            <div style="margin-top:0.75rem; display:flex; justify-content:space-between; align-items:center;">
+                <button class="btn btn-danger btn-sm" style="width:100%;" onclick="dischargePatient({{ b.patient_id }})">
+                    <i class="fas fa-sign-out-alt"></i> Discharge Patient
+                </button>
+            </div>
+            {% elif b.status == 'Available' %}
+            <div class="bed-patient-info" style="color:var(--slate-400); text-align:center; padding:1.2rem 0;">
+                <i class="fas fa-check-circle" style="color:var(--success); font-size:1.5rem; margin-bottom:4px; display:block;"></i>
+                Ready for Admission
+            </div>
+            <button class="btn btn-teal btn-sm" style="width:100%;" onclick="openAdmitModal({{ b.id }}, '{{ b.bed_number }}', '{{ b.ward }}')">
+                <i class="fas fa-user-plus"></i> Admit Patient
+            </button>
+            {% else %}
+            <div class="bed-patient-info" style="color:var(--warning); text-align:center; padding:1.2rem 0;">
+                <i class="fas fa-tools" style="font-size:1.5rem; margin-bottom:4px; display:block;"></i>
+                Under {{ b.status }}
+            </div>
+            <button class="btn btn-outline btn-sm" style="width:100%;" onclick="updateBedStatus({{ b.id }}, 'Available')">
+                <i class="fas fa-check"></i> Set Available
+            </button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+
+<!-- Admit Patient into Bed Modal -->
+<div class="modal-overlay" id="admitBedModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3 class="modal-title"><i class="fas fa-procedures" style="color:var(--teal); margin-right:8px;"></i> Inpatient Admission to Bed</h3>
+            <button class="modal-close" onclick="closeModal('admitBedModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <form onsubmit="submitBedAdmission(event)">
+            <input type="hidden" id="admitBedId">
+            <div class="modal-body">
+                <div style="background:var(--slate-50); border:1px solid var(--slate-200); border-radius:var(--radius-md); padding:1rem; margin-bottom:1.25rem;">
+                    <div style="font-size:0.8rem; color:var(--slate-500);">Target Bed & Ward:</div>
+                    <div style="font-size:1.2rem; font-weight:800; color:var(--primary);" id="admitBedNumber">Bed #</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Select Patient to Admit *</label>
+                    <select id="admitPatientSelect" class="form-control" required>
+                        {% for p in outpatient_list %}
+                        <option value="{{ p.id }}">{{ p.name }} ({{ p.patient_uid }}) - Status: {{ p.admission_status }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeModal('admitBedModal')">Cancel</button>
+                <button type="submit" class="btn btn-teal"><i class="fas fa-check"></i> Confirm Admission</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

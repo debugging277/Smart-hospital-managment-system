@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block page_title %}Smart AI Clinical Intelligence Suite{% endblock %}
+{% block page_subtitle %}Machine learning triage assistant, 30-day readmission risk calculator, and predictive bed demand forecasting{% endblock %}
+
+{% block content %}
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.75rem;">
+    <!-- Tool 1: AI Symptom Triage -->
+    <div class="card">
+        <div class="card-header" style="background: linear-gradient(90deg, #f0fdf4, #ffffff);">
+            <div class="card-title">
+                <i class="fas fa-stethoscope" style="color:var(--teal);"></i>
+                <span>AI Clinical Symptom Triage & Specialist Referral</span>
+            </div>
+            <span class="badge badge-teal">Real-Time NLP</span>
+        </div>
+        <div class="card-body">
+            <p style="font-size:0.82rem; color:var(--slate-600); margin-bottom:1.25rem;">
+                Evaluates multi-symptom clinical presentations, screens for emergency red flags, and routes patients to the correct department with an urgency score.
+            </p>
+
+            <div class="form-group">
+                <label class="form-label">Presenting Symptoms & Chief Complaint *</label>
+                <textarea id="aiSymptomsInput" class="form-control" rows="3" placeholder="e.g. Sudden severe crushing chest pain radiating to left jaw, diaphoresis, shortness of breath on exertion..."></textarea>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 2fr; gap:0.75rem; margin-bottom:1rem;">
+                <div>
+                    <label class="form-label">Patient Age</label>
+                    <input type="number" id="aiAgeInput" class="form-control" value="58">
+                </div>
+                <div>
+                    <label class="form-label">Known Chronic Conditions</label>
+                    <input type="text" id="aiConditionsInput" class="form-control" value="Hypertension, CAD" placeholder="e.g. Type 2 Diabetes, Asthma">
+                </div>
+            </div>
+
+            <div style="background:var(--slate-50); border:1px solid var(--slate-200); border-radius:var(--radius-md); padding:0.85rem; margin-bottom:1.25rem;">
+                <label class="form-label" style="font-size:0.75rem; color:var(--slate-500);"><i class="fas fa-heartbeat" style="color:var(--danger);"></i> Baseline Vitals for Triage</label>
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:0.5rem;">
+                    <div>
+                        <input type="number" id="aiSpo2Input" class="form-control" value="94" placeholder="SpO2 %">
+                    </div>
+                    <div>
+                        <input type="number" id="aiPulseInput" class="form-control" value="110" placeholder="Pulse bpm">
+                    </div>
+                    <div>
+                        <input type="number" step="0.1" id="aiTempInput" class="form-control" value="99.2" placeholder="Temp °F">
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-teal" style="width:100%; font-size:0.95rem;" onclick="runAiTriage()">
+                <i class="fas fa-brain"></i> Analyze Triage & Referral
+            </button>
+
+            <!-- Results Display Box -->
+            <div id="aiTriageResult" style="margin-top:1.25rem;"></div>
+        </div>
+    </div>
+
+    <!-- Tool 2: 30-Day Hospital Readmission Scorer -->
+    <div class="card">
+        <div class="card-header" style="background: linear-gradient(90deg, #f0f9ff, #ffffff);">
+            <div class="card-title">
+                <i class="fas fa-chart-line" style="color:var(--primary);"></i>
+                <span>30-Day Readmission Risk Scorer</span>
+            </div>
+            <span class="badge badge-primary">ML Predictive Model</span>
+        </div>
+        <div class="card-body">
+            <p style="font-size:0.82rem; color:var(--slate-600); margin-bottom:1.25rem;">
+                Quantifies the probability of hospital readmission within 30 days post-discharge using multi-morbidity metrics and stay telemetry.
+            </p>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.75rem; margin-bottom:1rem;">
+                <div>
+                    <label class="form-label">Patient Age</label>
+                    <input type="number" id="raAgeInput" class="form-control" value="71">
+                </div>
+                <div>
+                    <label class="form-label">Prior Admissions (Last 12mo)</label>
+                    <input type="number" id="raPriorInput" class="form-control" value="2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Comorbidities (Comma separated)</label>
+                <input type="text" id="raConditionsInput" class="form-control" value="Heart Failure, COPD, Type 2 Diabetes, Chronic Kidney Disease">
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.75rem; margin-bottom:1.25rem;">
+                <div>
+                    <label class="form-label">Length of Inpatient Stay</label>
+                    <select id="raStayInput" class="form-control">
+                        <option value="1">1 Day (Short Stay)</option>
+                        <option value="4" selected>4 - 7 Days (Standard)</option>
+                        <option value="10">8+ Days (Extended Stay)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Discharge Ward</label>
+                    <select id="raWardInput" class="form-control">
+                        <option value="ICU" selected>ICU / Critical Care</option>
+                        <option value="General Ward">General Ward</option>
+                        <option value="Emergency">Emergency Bay</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" style="width:100%; font-size:0.95rem;" onclick="runAiReadmission()">
+                <i class="fas fa-calculator"></i> Calculate Readmission Probability
+            </button>
+
+            <!-- Results Display Box -->
+            <div id="aiReadmissionResult" style="margin-top:1.25rem;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Tool 3: 7-Day Predictive Bed Occupancy Forecasting -->
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">
+            <i class="fas fa-bed" style="color:var(--primary);"></i>
+            <span>7-Day Predictive Inpatient Bed Influx Forecast</span>
+        </div>
+        <span class="badge badge-slate">Time-Series Forecast</span>
+    </div>
+    <div class="card-body">
+        <p style="font-size:0.82rem; color:var(--slate-600); margin-bottom:1rem;">
+            Predictive time-series model analyzing historical weekly admission cycles, elective surgical schedules, and emergency arrival patterns.
+        </p>
+        <div style="height: 280px;">
+            <canvas id="aiBedTrendChart"></canvas>
+        </div>
+    </div>
+</div>
+{% endblock %}

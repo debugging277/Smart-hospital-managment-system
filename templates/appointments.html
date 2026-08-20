@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block page_title %}OPD Queue & Appointments{% endblock %}
+{% block page_subtitle %}Real-time token management, doctor consultation schedules, and queue caller{% endblock %}
+
+{% block header_actions %}
+<button class="btn btn-primary btn-sm" onclick="openModal('bookAppointmentModal')">
+    <i class="fas fa-calendar-plus"></i> Book Consultation Slot
+</button>
+{% endblock %}
+
+{% block content %}
+<!-- Filter & Stats Bar -->
+<div class="filter-bar">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="aptSearchInput" placeholder="Search by patient, doctor, or token..." onkeyup="filterTable('aptSearchInput', 'appointmentsTable')">
+    </div>
+
+    <div style="display:flex; gap:0.5rem; align-items:center;">
+        <span style="font-size:0.82rem; font-weight:600; color:var(--slate-500);">Status:</span>
+        <a href="/appointments" class="btn btn-outline btn-sm {% if not current_status or current_status == 'All' %}btn-primary{% endif %}">All</a>
+        <a href="/appointments?status=Waiting" class="btn btn-outline btn-sm {% if current_status == 'Waiting' %}btn-primary{% endif %}">Waiting Queue</a>
+        <a href="/appointments?status=In-Consultation" class="btn btn-outline btn-sm {% if current_status == 'In-Consultation' %}btn-primary{% endif %}">In-Consultation</a>
+        <a href="/appointments?status=Scheduled" class="btn btn-outline btn-sm {% if current_status == 'Scheduled' %}btn-primary{% endif %}">Scheduled</a>
+        <a href="/appointments?status=Completed" class="btn btn-outline btn-sm {% if current_status == 'Completed' %}btn-primary{% endif %}">Completed</a>
+    </div>
+</div>
+
+<!-- Appointments Table Card -->
+<div class="card">
+    <div class="card-body" style="padding: 0;">
+        <div class="table-responsive">
+            <table class="clinical-table" id="appointmentsTable">
+                <thead>
+                    <tr>
+                        <th>Token #</th>
+                        <th>Appointment UID</th>
+                        <th>Patient Details</th>
+                        <th>Attending Doctor</th>
+                        <th>Date & Time Slot</th>
+                        <th>Clinical Reason / Vitals</th>
+                        <th>Queue Status</th>
+                        <th style="text-align:right;">Doctor Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for apt in appointments %}
+                    <tr>
+                        <td>
+                            <div style="font-size:1.15rem; font-weight:800; color:var(--slate-900); background:var(--slate-100); width:42px; height:42px; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                                #{{ apt.token_number }}
+                            </div>
+                        </td>
+                        <td>
+                            <strong style="color:var(--primary); font-size:0.85rem;">{{ apt.appointment_uid }}</strong>
+                        </td>
+                        <td>
+                            <div style="font-weight:700; color:var(--slate-900);">{{ apt.patient_name }}</div>
+                            <div style="font-size:0.75rem; color:var(--slate-500);">UID: {{ apt.patient_uid }} • {{ apt.patient_phone }}</div>
+                        </td>
+                        <td>
+                            <div style="font-weight:600; color:var(--slate-900);">{{ apt.doctor_name }}</div>
+                            <div style="font-size:0.75rem; color:var(--teal);">{{ apt.doctor_dept }} • {{ apt.room_number }}</div>
+                        </td>
+                        <td>
+                            <div style="font-weight:600; font-size:0.82rem;">{{ apt.appointment_date }}</div>
+                            <div style="font-size:0.75rem; color:var(--slate-500);"><i class="fas fa-clock"></i> {{ apt.time_slot }}</div>
+                        </td>
+                        <td>
+                            <div style="font-size:0.82rem; font-weight:500;">{{ apt.reason or 'General checkup' }}</div>
+                            {% if apt.vitals %}
+                            <div style="font-size:0.72rem; color:var(--slate-500); margin-top:2px;">
+                                BP: <strong>{{ apt.vitals.bp or '--' }}</strong> | Pulse: <strong>{{ apt.vitals.pulse or '--' }}</strong> | SpO2: <strong>{{ apt.vitals.spo2 or '--' }}%</strong>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if apt.status == 'In-Consultation' %}
+                            <span class="badge badge-teal"><span class="pulse-dot" style="background:#0d9488;"></span> In Consultation</span>
+                            {% elif apt.status == 'Waiting' %}
+                            <span class="badge badge-warning">Waiting in OPD</span>
+                            {% elif apt.status == 'Completed' %}
+                            <span class="badge badge-success">Completed</span>
+                            {% elif apt.status == 'Cancelled' %}
+                            <span class="badge badge-danger">Cancelled</span>
+                            {% else %}
+                            <span class="badge badge-slate">Scheduled</span>
+                            {% endif %}
+                        </td>
+                        <td style="text-align:right;">
+                            <div style="display:inline-flex; gap:0.4rem;">
+                                {% if apt.status == 'Scheduled' or apt.status == 'Waiting' %}
+                                <button class="btn btn-teal btn-sm" onclick="updateAppointmentStatus({{ apt.id }}, 'In-Consultation')">
+                                    <i class="fas fa-bullhorn"></i> Call
+                                </button>
+                                {% endif %}
+
+                                {% if apt.status == 'In-Consultation' %}
+                                <a href="/prescriptions?patient_id={{ apt.patient_id }}&doctor_id={{ apt.doctor_id }}&appointment_id={{ apt.id }}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-file-prescription"></i> Write Rx
+                                </a>
+                                <button class="btn btn-outline btn-sm" onclick="updateAppointmentStatus({{ apt.id }}, 'Completed')">
+                                    <i class="fas fa-check"></i> Done
+                                </button>
+                                {% endif %}
+
+                                {% if apt.status != 'Cancelled' and apt.status != 'Completed' %}
+                                <button class="btn btn-outline btn-sm" style="color:var(--danger);" onclick="updateAppointmentStatus({{ apt.id }}, 'Cancelled')">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Book Appointment Modal -->
+<div class="modal-overlay" id="bookAppointmentModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3 class="modal-title"><i class="fas fa-calendar-plus" style="color:var(--primary); margin-right:8px;"></i> Book Doctor Consultation Slot</h3>
+            <button class="modal-close" onclick="closeModal('bookAppointmentModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <form onsubmit="submitNewAppointment(event)">
+            <div class="modal-body">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Select Patient *</label>
+                        <select name="patient_id" class="form-control" required>
+                            {% for p in patients %}
+                            <option value="{{ p.id }}">{{ p.name }} ({{ p.patient_uid }}) - Age: {{ p.age }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Attending Doctor / Department *</label>
+                        <select name="doctor_id" class="form-control" required>
+                            {% for d in doctors %}
+                            <option value="{{ d.id }}">{{ d.name }} - {{ d.department }} (${{ d.consultation_fee }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Appointment Date *</label>
+                        <input type="date" name="appointment_date" class="form-control" value="{{ today_date }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time Slot *</label>
+                        <select name="time_slot" class="form-control" required>
+                            <option value="09:00 - 09:30">09:00 - 09:30 AM</option>
+                            <option value="09:30 - 10:00">09:30 - 10:00 AM</option>
+                            <option value="10:00 - 10:30">10:00 - 10:30 AM</option>
+                            <option value="10:30 - 11:00">10:30 - 11:00 AM</option>
+                            <option value="11:00 - 11:30">11:00 - 11:30 AM</option>
+                            <option value="11:30 - 12:00">11:30 - 12:00 PM</option>
+                            <option value="14:00 - 14:30">02:00 - 02:30 PM</option>
+                            <option value="15:00 - 15:30">03:00 - 03:30 PM</option>
+                            <option value="16:00 - 16:30">04:00 - 04:30 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Chief Complaint / Consultation Reason</label>
+                    <input type="text" name="reason" class="form-control" placeholder="e.g. Chest pain, Routine diabetes follow-up, Knee stiffness">
+                </div>
+
+                <div style="background:var(--slate-50); border:1px solid var(--slate-200); border-radius:var(--radius-md); padding:1rem; margin-top:1rem;">
+                    <h5 style="font-size:0.82rem; font-weight:700; color:var(--slate-700); margin-bottom:0.75rem;"><i class="fas fa-heartbeat" style="color:var(--danger);"></i> OPD Triage Vitals (Optional)</h5>
+                    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:0.75rem;">
+                        <div>
+                            <label class="form-label" style="font-size:0.75rem;">Blood Pressure</label>
+                            <input type="text" name="bp" class="form-control" placeholder="120/80">
+                        </div>
+                        <div>
+                            <label class="form-label" style="font-size:0.75rem;">Pulse (BPM)</label>
+                            <input type="number" name="pulse" class="form-control" placeholder="72">
+                        </div>
+                        <div>
+                            <label class="form-label" style="font-size:0.75rem;">Temp (°F)</label>
+                            <input type="number" step="0.1" name="temp" class="form-control" placeholder="98.6">
+                        </div>
+                        <div>
+                            <label class="form-label" style="font-size:0.75rem;">SpO2 (%)</label>
+                            <input type="number" name="spo2" class="form-control" placeholder="99">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeModal('bookAppointmentModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Generate Token & Book</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

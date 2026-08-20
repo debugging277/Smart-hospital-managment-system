@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block page_title %}Executive Clinical Dashboard{% endblock %}
+{% block page_subtitle %}St. Metropolitan Medical Center — Live Operations Telemetry{% endblock %}
+
+{% block content %}
+<!-- Top KPI Summary Cards -->
+<div class="stats-grid">
+    <div class="stat-card blue">
+        <div class="stat-icon-wrapper">
+            <i class="fas fa-user-injured"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-label">Total Patients</div>
+            <div class="stat-value">{{ metrics.total_patients }}</div>
+            <div class="stat-sub"><i class="fas fa-bed" style="color:var(--primary);"></i> {{ metrics.admitted_patients }} Inpatients Currently Admitted</div>
+        </div>
+    </div>
+
+    <div class="stat-card {% if metrics.bed_occupancy_rate > 80 %}red{% else %}teal{% endif %}">
+        <div class="stat-icon-wrapper">
+            <i class="fas fa-procedures"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-label">Bed Occupancy Rate</div>
+            <div class="stat-value">{{ metrics.bed_occupancy_rate }}%</div>
+            <div class="stat-sub">
+                <span class="badge {% if metrics.icu_occupied >= metrics.icu_total %}badge-danger{% else %}badge-warning{% endif %}">
+                    ICU: {{ metrics.icu_occupied }}/{{ metrics.icu_total }} Used
+                </span>
+                <span style="margin-left:5px;">{{ metrics.occupied_beds }}/{{ metrics.total_beds }} Total</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="stat-card amber">
+        <div class="stat-icon-wrapper">
+            <i class="fas fa-calendar-check"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-label">Today's OPD Queue</div>
+            <div class="stat-value">{{ metrics.today_appointments }}</div>
+            <div class="stat-sub"><i class="fas fa-clock" style="color:var(--warning);"></i> {{ metrics.waiting_opd }} Patients in Active Waiting Queue</div>
+        </div>
+    </div>
+
+    <div class="stat-card green">
+        <div class="stat-icon-wrapper">
+            <i class="fas fa-file-invoice-dollar"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-label">Hospital Revenue</div>
+            <div class="stat-value">${{ "%.2f"|format(metrics.total_revenue) }}</div>
+            <div class="stat-sub"><i class="fas fa-hourglass-half" style="color:var(--slate-400);"></i> ${{ "%.2f"|format(metrics.pending_revenue) }} Pending Claims</div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Dashboard Grid -->
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 1.75rem;">
+    <!-- Live OPD Token Queue Monitor -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <i class="fas fa-ticket-alt" style="color:var(--primary);"></i>
+                <span>Live Outpatient (OPD) Queue Caller</span>
+            </div>
+            <a href="/appointments" class="btn btn-outline btn-sm">Manage All Appointments</a>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <div class="table-responsive">
+                <table class="clinical-table">
+                    <thead>
+                        <tr>
+                            <th>Token #</th>
+                            <th>Patient</th>
+                            <th>Consulting Doctor</th>
+                            <th>Time Slot</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for apt in appointments[:5] %}
+                        <tr>
+                            <td>
+                                <span class="badge {% if apt.status == 'In-Consultation' %}badge-teal{% elif apt.status == 'Waiting' %}badge-warning{% elif apt.status == 'Completed' %}badge-success{% else %}badge-slate{% endif %}" style="font-size:0.85rem; font-weight:800; padding:0.35rem 0.65rem;">
+                                    #{{ apt.token_number }}
+                                </span>
+                            </td>
+                            <td>
+                                <div style="font-weight:700; color:var(--slate-900);">{{ apt.patient_name }}</div>
+                                <div style="font-size:0.75rem; color:var(--slate-500);">UID: {{ apt.patient_uid }}</div>
+                            </td>
+                            <td>
+                                <div style="font-weight:600;">{{ apt.doctor_name }}</div>
+                                <div style="font-size:0.75rem; color:var(--primary);">{{ apt.doctor_dept }} ({{ apt.room_number }})</div>
+                            </td>
+                            <td>
+                                <div style="font-size:0.82rem; font-weight:600;">{{ apt.time_slot }}</div>
+                            </td>
+                            <td>
+                                {% if apt.status == 'In-Consultation' %}
+                                <span class="badge badge-teal"><span class="pulse-dot" style="background:#0d9488;"></span> In Consultation</span>
+                                {% elif apt.status == 'Waiting' %}
+                                <span class="badge badge-warning">Waiting in OPD</span>
+                                {% elif apt.status == 'Completed' %}
+                                <span class="badge badge-success">Completed</span>
+                                {% else %}
+                                <span class="badge badge-slate">{{ apt.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if apt.status == 'Waiting' %}
+                                <button class="btn btn-teal btn-sm" onclick="updateAppointmentStatus({{ apt.id }}, 'In-Consultation')">
+                                    <i class="fas fa-bullhorn"></i> Call Next
+                                </button>
+                                {% elif apt.status == 'In-Consultation' %}
+                                <a href="/prescriptions?patient_id={{ apt.patient_id }}&doctor_id={{ apt.doctor_id }}&appointment_id={{ apt.id }}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-notes-medical"></i> Consult & Rx
+                                </a>
+                                {% else %}
+                                <span style="color:var(--slate-400); font-size:0.8rem;">Finished</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bed Capacity Visualizer Chart -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <i class="fas fa-chart-pie" style="color:var(--teal);"></i>
+                <span>Bed Occupancy Breakdown</span>
+            </div>
+            <a href="/beds" class="btn btn-outline btn-sm">Bed Map</a>
+        </div>
+        <div class="card-body" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+            <div style="width: 100%; height: 220px; position:relative;">
+                <canvas id="bedOccupancyChart"></canvas>
+            </div>
+            <div style="margin-top: 1rem; width:100%; display:flex; justify-content:space-around; font-size:0.82rem; text-align:center;">
+                <div>
+                    <div style="font-weight:800; color:var(--danger); font-size:1.1rem;">{{ metrics.icu_occupied }}/{{ metrics.icu_total }}</div>
+                    <div style="color:var(--slate-500);">ICU Beds</div>
+                </div>
+                <div>
+                    <div style="font-weight:800; color:var(--primary); font-size:1.1rem;">{{ metrics.occupied_beds }}</div>
+                    <div style="color:var(--slate-500);">Total Occupied</div>
+                </div>
+                <div>
+                    <div style="font-weight:800; color:var(--success); font-size:1.1rem;">{{ metrics.total_beds - metrics.occupied_beds }}</div>
+                    <div style="color:var(--slate-500);">Available</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Secondary Row: Department Flow + Recent Audit Logs -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+    <!-- Departmental Flow -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <i class="fas fa-hospital" style="color:var(--primary);"></i>
+                <span>Department Patient Distribution</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div style="height: 230px;">
+                <canvas id="deptFlowChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Activity & Audit Trail -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <i class="fas fa-history" style="color:var(--slate-600);"></i>
+                <span>Live Clinical Activity Feed</span>
+            </div>
+            <span class="badge badge-slate">Real-Time</span>
+        </div>
+        <div class="card-body" style="padding: 1rem 1.5rem;">
+            <div style="display:flex; flex-direction:column; gap:0.85rem;">
+                {% for act in metrics.recent_activities %}
+                <div style="display:flex; align-items:flex-start; gap:0.75rem; font-size:0.85rem; border-bottom: 1px solid var(--slate-100); padding-bottom: 0.6rem;">
+                    <div style="width:28px; height:28px; border-radius:50%; background:var(--slate-100); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--primary);">
+                        <i class="fas fa-check-circle" style="font-size:0.8rem;"></i>
+                    </div>
+                    <div style="flex:1;">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:0.15rem;">
+                            <strong style="color:var(--slate-900); font-size:0.82rem;">{{ act.category }}</strong>
+                            <span style="font-size:0.72rem; color:var(--slate-400);">{{ act.timestamp }}</span>
+                        </div>
+                        <div style="color:var(--slate-600); font-size:0.8rem;">{{ act.action }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

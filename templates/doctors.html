@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block page_title %}Medical Specialists & Department Directory{% endblock %}
+{% block page_subtitle %}St. Metropolitan Physician Registry, Qualifications, and Shifts{% endblock %}
+
+{% block content %}
+<!-- Department Filter Pills -->
+<div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom: 1.5rem;">
+    <a href="/doctors" class="btn btn-outline btn-sm {% if not current_dept or current_dept == 'All' %}btn-primary{% endif %}">All Specialties</a>
+    <a href="/doctors?dept=Cardiology" class="btn btn-outline btn-sm {% if current_dept == 'Cardiology' %}btn-primary{% endif %}"><i class="fas fa-heartbeat"></i> Cardiology</a>
+    <a href="/doctors?dept=Neurology" class="btn btn-outline btn-sm {% if current_dept == 'Neurology' %}btn-primary{% endif %}"><i class="fas fa-brain"></i> Neurology</a>
+    <a href="/doctors?dept=Orthopedics" class="btn btn-outline btn-sm {% if current_dept == 'Orthopedics' %}btn-primary{% endif %}"><i class="fas fa-bone"></i> Orthopedics</a>
+    <a href="/doctors?dept=Pediatrics" class="btn btn-outline btn-sm {% if current_dept == 'Pediatrics' %}btn-primary{% endif %}"><i class="fas fa-baby"></i> Pediatrics</a>
+    <a href="/doctors?dept=General Medicine" class="btn btn-outline btn-sm {% if current_dept == 'General Medicine' %}btn-primary{% endif %}"><i class="fas fa-stethoscope"></i> General Med</a>
+    <a href="/doctors?dept=Emergency Medicine" class="btn btn-outline btn-sm {% if current_dept == 'Emergency Medicine' %}btn-primary{% endif %}"><i class="fas fa-ambulance"></i> Emergency</a>
+    <a href="/doctors?dept=Pulmonology" class="btn btn-outline btn-sm {% if current_dept == 'Pulmonology' %}btn-primary{% endif %}"><i class="fas fa-lungs"></i> Pulmonology</a>
+</div>
+
+<!-- Doctors Grid -->
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+    {% for doc in doctors %}
+    <div class="card" style="transition: transform 0.2s ease;">
+        <div class="card-body">
+            <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem;">
+                <div style="width: 54px; height: 54px; border-radius: var(--radius-md); background: linear-gradient(135deg, #0284c7, #0d9488); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; flex-shrink: 0;">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <div style="flex: 1;">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--slate-900);">{{ doc.name }}</h3>
+                        <span class="badge {% if doc.status == 'Available' %}badge-success{% elif doc.status == 'In Consultation' %}badge-teal{% elif doc.status == 'On Round' %}badge-warning{% else %}badge-slate{% endif %}">
+                            {{ doc.status }}
+                        </span>
+                    </div>
+                    <div style="font-size: 0.8rem; font-weight: 600; color: var(--primary);">{{ doc.department }}</div>
+                    <div style="font-size: 0.72rem; color: var(--slate-500);">{{ doc.qualification }} • {{ doc.experience_years }} yrs exp</div>
+                </div>
+            </div>
+
+            <div style="background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-md); padding: 0.75rem; font-size: 0.8rem; margin-bottom: 1rem;">
+                <div style="display:flex; justify-content:space-between; margin-bottom: 0.35rem;">
+                    <span style="color:var(--slate-500);"><i class="fas fa-door-open"></i> Location:</span>
+                    <strong style="color:var(--slate-800);">{{ doc.room_number }}</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom: 0.35rem;">
+                    <span style="color:var(--slate-500);"><i class="fas fa-clock"></i> Shift:</span>
+                    <span style="color:var(--slate-800); font-weight:600;">{{ doc.shift }}</span>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <span style="color:var(--slate-500);"><i class="fas fa-tag"></i> Fee:</span>
+                    <strong style="color:var(--teal); font-size:0.9rem;">${{ "%.2f"|format(doc.consultation_fee) }} / visit</strong>
+                </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div style="font-size: 0.8rem; color: #f59e0b; font-weight: 700;">
+                    <i class="fas fa-star"></i> {{ doc.rating }} <span style="color:var(--slate-400); font-weight:normal;">/ 5.0</span>
+                </div>
+                <a href="/appointments?doctor_id={{ doc.id }}" class="btn btn-outline btn-sm">
+                    <i class="fas fa-calendar-check"></i> Book Consultation
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

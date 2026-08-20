@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block page_title %}Patient Registry & EHR{% endblock %}
+{% block page_subtitle %}Electronic Health Records, Medical Profiles, and Inpatient Status{% endblock %}
+
+{% block header_actions %}
+<button class="btn btn-primary btn-sm" onclick="openModal('addPatientModal')">
+    <i class="fas fa-user-plus"></i> New Patient Registration
+</button>
+{% endblock %}
+
+{% block content %}
+<!-- Search and Filter Header -->
+<div class="filter-bar">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="patientSearchInput" placeholder="Search by name, patient UID, phone..." onkeyup="filterTable('patientSearchInput', 'patientsTable')">
+    </div>
+
+    <div style="display:flex; gap:0.5rem; align-items:center;">
+        <span style="font-size:0.82rem; font-weight:600; color:var(--slate-500);">Filter Status:</span>
+        <a href="/patients" class="btn btn-outline btn-sm {% if not current_filter or current_filter == 'All' %}btn-primary{% endif %}">All</a>
+        <a href="/patients?status=Admitted" class="btn btn-outline btn-sm {% if current_filter == 'Admitted' %}btn-primary{% endif %}">Admitted (Inpatients)</a>
+        <a href="/patients?status=Outpatient" class="btn btn-outline btn-sm {% if current_filter == 'Outpatient' %}btn-primary{% endif %}">Outpatients</a>
+        <a href="/patients?status=Discharged" class="btn btn-outline btn-sm {% if current_filter == 'Discharged' %}btn-primary{% endif %}">Discharged</a>
+    </div>
+</div>
+
+<!-- Patients List Card -->
+<div class="card">
+    <div class="card-body" style="padding: 0;">
+        <div class="table-responsive">
+            <table class="clinical-table" id="patientsTable">
+                <thead>
+                    <tr>
+                        <th>Patient UID</th>
+                        <th>Name & Demographics</th>
+                        <th>Blood Group</th>
+                        <th>Phone & Contact</th>
+                        <th>Allergies & Conditions</th>
+                        <th>Current Location / Bed</th>
+                        <th>Status</th>
+                        <th style="text-align:right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in patients %}
+                    <tr>
+                        <td>
+                            <strong style="color:var(--primary); font-size:0.85rem;">{{ p.patient_uid }}</strong>
+                            <div style="font-size:0.7rem; color:var(--slate-400);">ID: #{{ p.id }}</div>
+                        </td>
+                        <td>
+                            <div class="patient-cell">
+                                <div class="avatar-sm {% if p.gender == 'Female' %}avatar-female{% endif %}">
+                                    {{ p.name[:1] }}
+                                </div>
+                                <div>
+                                    <div style="font-weight:700; color:var(--slate-900);">{{ p.name }}</div>
+                                    <div style="font-size:0.75rem; color:var(--slate-500);">{{ p.age }} yrs • {{ p.gender }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-slate" style="font-weight:800;">{{ p.blood_group or 'N/A' }}</span>
+                        </td>
+                        <td>
+                            <div style="font-weight:600; font-size:0.82rem;">{{ p.phone }}</div>
+                            <div style="font-size:0.72rem; color:var(--slate-400);">{{ p.email or 'No email' }}</div>
+                        </td>
+                        <td>
+                            {% if p.allergies and p.allergies != 'None' and p.allergies != 'None known' %}
+                            <div style="color:var(--danger); font-weight:600; font-size:0.78rem;">
+                                <i class="fas fa-exclamation-circle"></i> {{ p.allergies }}
+                            </div>
+                            {% else %}
+                            <div style="color:var(--slate-400); font-size:0.78rem;">No known allergies</div>
+                            {% endif %}
+                            <div style="font-size:0.72rem; color:var(--slate-600); margin-top:2px;">{{ p.chronic_conditions or 'None' }}</div>
+                        </td>
+                        <td>
+                            {% if p.bed_number %}
+                            <span class="badge badge-teal"><i class="fas fa-bed"></i> {{ p.bed_number }} ({{ p.bed_ward }})</span>
+                            {% else %}
+                            <span style="color:var(--slate-400); font-size:0.8rem;">OPD / None</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if p.admission_status == 'Admitted' %}
+                            <span class="badge badge-primary"><span class="pulse-dot" style="background:#0284c7;"></span> Admitted</span>
+                            {% elif p.admission_status == 'Emergency' %}
+                            <span class="badge badge-danger">Emergency</span>
+                            {% elif p.admission_status == 'Discharged' %}
+                            <span class="badge badge-slate">Discharged</span>
+                            {% else %}
+                            <span class="badge badge-success">Outpatient</span>
+                            {% endif %}
+                        </td>
+                        <td style="text-align:right;">
+                            <div style="display:inline-flex; gap:0.4rem;">
+                                <a href="/prescriptions?patient_id={{ p.id }}" class="btn btn-outline btn-sm" title="New Prescription">
+                                    <i class="fas fa-prescription"></i> Rx
+                                </a>
+                                {% if p.admission_status == 'Admitted' %}
+                                <button class="btn btn-danger btn-sm" onclick="dischargePatient({{ p.id }})" title="Discharge & Release Bed">
+                                    <i class="fas fa-sign-out-alt"></i> Discharge
+                                </button>
+                                {% else %}
+                                <a href="/beds" class="btn btn-teal btn-sm" title="Assign Bed">
+                                    <i class="fas fa-bed"></i> Admit
+                                </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Add Patient Modal -->
+<div class="modal-overlay" id="addPatientModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3 class="modal-title"><i class="fas fa-user-plus" style="color:var(--primary); margin-right:8px;"></i> Comprehensive Patient Registration</h3>
+            <button class="modal-close" onclick="closeModal('addPatientModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <form onsubmit="submitNewPatient(event)">
+            <div class="modal-body">
+                <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" name="name" class="form-control" placeholder="e.g. Robert Pattinson" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Age *</label>
+                        <input type="number" name="age" class="form-control" placeholder="38" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Gender *</label>
+                        <select name="gender" class="form-control" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Blood Group</label>
+                        <select name="blood_group" class="form-control">
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone Number *</label>
+                        <input type="tel" name="phone" class="form-control" placeholder="+1 (555) 000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="patient@example.com">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Residential Address</label>
+                    <input type="text" name="address" class="form-control" placeholder="123 Health Ave, Suite 400, Metro City">
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Drug Allergies</label>
+                        <input type="text" name="allergies" class="form-control" placeholder="e.g. Penicillin, Aspirin, NSAIDs">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Chronic Conditions</label>
+                        <input type="text" name="chronic_conditions" class="form-control" placeholder="e.g. Diabetes, Hypertension, CAD">
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Emergency Contact Person</label>
+                        <input type="text" name="emergency_contact_name" class="form-control" placeholder="Jane Doe (Spouse)">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Emergency Contact Phone</label>
+                        <input type="tel" name="emergency_contact_phone" class="form-control" placeholder="+1 (555) 999-0000">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeModal('addPatientModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Register Patient</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block page_title %}Pharmacy Inventory & Dispensary{% endblock %}
+{% block page_subtitle %}Pharmaceutical stock control, batch tracking, expiry monitoring, and direct dispensing{% endblock %}
+
+{% block content %}
+<!-- Inventory Alerts & Stats -->
+<div class="stats-grid">
+    <div class="stat-card blue">
+        <div class="stat-icon-wrapper">
+            <i class="fas fa-capsules"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-label">Total Medications</div>
+            <div class="stat-value">{{ medicines|length }}</div>
+            <div class="stat-sub">Across 8 Categories</div>
+        </div>
+    </div>
+    <div class="stat-card {% if low_stock_count > 0 %}red{% else %}green{% endif %}">
+        <div class="stat-icon-wrapper">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-label">Low-Stock Warnings</div>
+            <div class="stat-value">{{ low_stock_count }}</div>
+            <div class="stat-sub">Below Minimum Threshold</div>
+        </div>
+    </div>
+    <div class="stat-card teal">
+        <div class="stat-icon-wrapper">
+            <i class="fas fa-hand-holding-medical"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-label">Direct Dispensing</div>
+            <div class="stat-value">Active</div>
+            <div class="stat-sub">POS Stock Synchronized</div>
+        </div>
+    </div>
+</div>
+
+<!-- Search & Filter Bar -->
+<div class="filter-bar">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="medSearchInput" placeholder="Search medication name, generic name, batch..." onkeyup="filterTable('medSearchInput', 'medsTable')">
+    </div>
+
+    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
+        <a href="/pharmacy" class="btn btn-outline btn-sm {% if not current_cat or current_cat == 'All' %}btn-primary{% endif %}">All Categories</a>
+        <a href="/pharmacy?cat=Antibiotics" class="btn btn-outline btn-sm {% if current_cat == 'Antibiotics' %}btn-primary{% endif %}">Antibiotics</a>
+        <a href="/pharmacy?cat=Cardiovascular" class="btn btn-outline btn-sm {% if current_cat == 'Cardiovascular' %}btn-primary{% endif %}">Cardiovascular</a>
+        <a href="/pharmacy?cat=Analgesics" class="btn btn-outline btn-sm {% if current_cat == 'Analgesics' %}btn-primary{% endif %}">Analgesics</a>
+        <a href="/pharmacy?cat=Antidiabetics" class="btn btn-outline btn-sm {% if current_cat == 'Antidiabetics' %}btn-primary{% endif %}">Antidiabetics</a>
+        <a href="/pharmacy?cat=Respiratory" class="btn btn-outline btn-sm {% if current_cat == 'Respiratory' %}btn-primary{% endif %}">Respiratory</a>
+    </div>
+</div>
+
+<!-- Medicines Table Card -->
+<div class="card">
+    <div class="card-body" style="padding: 0;">
+        <div class="table-responsive">
+            <table class="clinical-table" id="medsTable">
+                <thead>
+                    <tr>
+                        <th>Medication Details</th>
+                        <th>Category</th>
+                        <th>Stock Level</th>
+                        <th>Unit Price</th>
+                        <th>Batch #</th>
+                        <th>Expiry Date</th>
+                        <th>Manufacturer</th>
+                        <th style="text-align:right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in medicines %}
+                    <tr>
+                        <td>
+                            <div style="font-weight:700; color:var(--slate-900);">{{ m.name }}</div>
+                            <div style="font-size:0.75rem; color:var(--slate-500);">Generic: {{ m.generic_name or 'N/A' }} • {{ m.unit }}</div>
+                        </td>
+                        <td>
+                            <span class="badge badge-teal">{{ m.category }}</span>
+                        </td>
+                        <td>
+                            {% if m.stock <= m.min_threshold %}
+                            <div style="display:flex; align-items:center; gap:0.4rem;">
+                                <strong style="color:var(--danger); font-size:1rem;">{{ m.stock }}</strong>
+                                <span class="badge badge-danger" style="font-size:0.7rem;">LOW STOCK</span>
+                            </div>
+                            <div style="font-size:0.7rem; color:var(--slate-400);">Min threshold: {{ m.min_threshold }}</div>
+                            {% else %}
+                            <div style="font-weight:700; color:var(--slate-800); font-size:0.95rem;">{{ m.stock }}</div>
+                            <div style="font-size:0.7rem; color:var(--slate-400);">In stock</div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <strong style="color:var(--slate-900); font-size:0.9rem;">${{ "%.2f"|format(m.unit_price) }}</strong>
+                        </td>
+                        <td>
+                            <span style="font-family:monospace; font-size:0.8rem; background:var(--slate-100); padding:2px 6px; border-radius:4px;">{{ m.batch_number }}</span>
+                        </td>
+                        <td>
+                            <span style="font-size:0.82rem; font-weight:600; color: {% if m.expiry_date and m.expiry_date < '2026-12-31' %}var(--danger){% else %}var(--slate-700){% endif %};">
+                                {{ m.expiry_date }}
+                            </span>
+                        </td>
+                        <td>
+                            <div style="font-size:0.8rem; color:var(--slate-600);">{{ m.manufacturer }}</div>
+                        </td>
+                        <td style="text-align:right;">
+                            <button class="btn btn-teal btn-sm" onclick="dispenseMedicine({{ m.id }}, {{ m.stock }})">
+                                <i class="fas fa-dolly"></i> Dispense POS
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

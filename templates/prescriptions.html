@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block page_title %}Digital Prescriptions & Clinical Consultation{% endblock %}
+{% block page_subtitle %}E-Prescriptions, ICD Diagnosis, Medication Orders, and Lab Requests{% endblock %}
+
+{% block header_actions %}
+<button class="btn btn-primary btn-sm" onclick="openModal('newPrescriptionModal')">
+    <i class="fas fa-file-signature"></i> Write New Prescription
+</button>
+{% endblock %}
+
+{% block content %}
+<!-- Prescriptions List -->
+<div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+    {% for rx in prescriptions %}
+    <div class="card print-container">
+        <div class="card-header" style="background: linear-gradient(90deg, #f8fafc, #ffffff);">
+            <div>
+                <div style="display:flex; align-items:center; gap:0.75rem;">
+                    <span style="font-size:1.4rem; font-weight:800; color:var(--primary); font-family:serif;">℞</span>
+                    <div>
+                        <h3 style="font-size:1.1rem; font-weight:700; color:var(--slate-900);">Prescription {{ rx.prescription_uid }}</h3>
+                        <div style="font-size:0.75rem; color:var(--slate-500);">Date: {{ rx.date }}</div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:right;">
+                <button class="btn btn-outline btn-sm no-print" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print Official Rx
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <!-- Header Info -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem; padding-bottom:1rem; border-bottom:1px solid var(--slate-200); margin-bottom:1.25rem;">
+                <div>
+                    <span style="font-size:0.75rem; color:var(--slate-400); text-transform:uppercase; font-weight:700;">Patient Details</span>
+                    <div style="font-size:1.05rem; font-weight:700; color:var(--slate-900); margin-top:2px;">{{ rx.patient_name }}</div>
+                    <div style="font-size:0.8rem; color:var(--slate-600);">UID: {{ rx.patient_uid }} • {{ rx.patient_age }} yrs ({{ rx.patient_gender }})</div>
+                </div>
+                <div style="text-align:right;">
+                    <span style="font-size:0.75rem; color:var(--slate-400); text-transform:uppercase; font-weight:700;">Attending Specialist</span>
+                    <div style="font-size:1.05rem; font-weight:700; color:var(--slate-900); margin-top:2px;">{{ rx.doctor_name }}</div>
+                    <div style="font-size:0.8rem; color:var(--primary);">{{ rx.doctor_dept }} • {{ rx.doctor_qual }}</div>
+                </div>
+            </div>
+
+            <!-- Diagnosis & Symptoms -->
+            <div style="background:var(--slate-50); border:1px solid var(--slate-200); border-radius:var(--radius-md); padding:1rem; margin-bottom:1.25rem;">
+                <div style="display:grid; grid-template-columns: 2fr 1fr; gap:1rem;">
+                    <div>
+                        <span style="font-size:0.75rem; color:var(--slate-500); font-weight:700; text-transform:uppercase;">Clinical Diagnosis:</span>
+                        <div style="font-weight:700; font-size:1rem; color:var(--slate-900);">
+                            {{ rx.diagnosis }}
+                            {% if rx.icd_code %}
+                            <span class="badge badge-primary" style="margin-left:6px;">ICD: {{ rx.icd_code }}</span>
+                            {% endif %}
+                        </div>
+                        {% if rx.symptoms %}
+                        <div style="font-size:0.8rem; color:var(--slate-600); margin-top:4px;">
+                            <strong>Presenting Symptoms:</strong> {{ rx.symptoms }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if rx.vitals %}
+                    <div style="border-left:1px solid var(--slate-200); padding-left:1rem; font-size:0.78rem;">
+                        <span style="font-size:0.72rem; color:var(--slate-500); font-weight:700; text-transform:uppercase;">Vitals at Exam:</span>
+                        <div style="margin-top:3px; color:var(--slate-700);">
+                            BP: <strong>{{ rx.vitals.bp or '--' }}</strong> | Pulse: <strong>{{ rx.vitals.pulse or '--' }}</strong>
+                        </div>
+                        <div style="color:var(--slate-700);">
+                            Temp: <strong>{{ rx.vitals.temp or '--' }}°F</strong> | SpO2: <strong>{{ rx.vitals.spo2 or '--' }}%</strong>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Prescribed Medications Table -->
+            <div style="margin-bottom:1.25rem;">
+                <h4 style="font-size:0.9rem; font-weight:700; color:var(--slate-800); margin-bottom:0.6rem; display:flex; align-items:center; gap:0.5rem;">
+                    <i class="fas fa-pills" style="color:var(--primary);"></i> Prescribed Medications
+                </h4>
+                <div class="table-responsive">
+                    <table class="clinical-table" style="background:#fff; border:1px solid var(--slate-200); border-radius:var(--radius-md);">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Medication Name</th>
+                                <th>Dosage</th>
+                                <th>Frequency</th>
+                                <th>Duration</th>
+                                <th>Instructions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for m in rx.medicines %}
+                            <tr>
+                                <td style="font-weight:700; color:var(--slate-400);">{{ loop.index }}</td>
+                                <td><strong style="color:var(--slate-900);">{{ m.name }}</strong></td>
+                                <td>{{ m.dosage }}</td>
+                                <td><span class="badge badge-teal">{{ m.frequency }}</span></td>
+                                <td>{{ m.duration }}</td>
+                                <td style="color:var(--slate-600); font-size:0.8rem;">{{ m.instructions }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Lab Orders & Advice -->
+            {% if rx.lab_tests or rx.doctor_notes %}
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem; margin-top:1rem;">
+                {% if rx.lab_tests %}
+                <div>
+                    <h5 style="font-size:0.85rem; font-weight:700; color:var(--slate-800); margin-bottom:0.4rem;">
+                        <i class="fas fa-vial" style="color:var(--teal);"></i> Ordered Diagnostic Tests:
+                    </h5>
+                    <ul style="list-style:none; padding:0; font-size:0.82rem;">
+                        {% for lt in rx.lab_tests %}
+                        <li style="padding:0.4rem 0.6rem; background:var(--slate-50); border-radius:4px; margin-bottom:4px; border-left:3px solid var(--teal);">
+                            <strong>{{ lt.test_name }}</strong> <span class="badge badge-slate" style="font-size:0.7rem;">{{ lt.urgency }}</span>
+                            <div style="font-size:0.75rem; color:var(--slate-500);">{{ lt.instructions }}</div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <div>
+                    <h5 style="font-size:0.85rem; font-weight:700; color:var(--slate-800); margin-bottom:0.4rem;">
+                        <i class="fas fa-comment-medical" style="color:var(--primary);"></i> Doctor's Clinical Advice:
+                    </h5>
+                    <div style="font-size:0.82rem; color:var(--slate-700); background:var(--slate-50); padding:0.75rem; border-radius:var(--radius-md); border:1px solid var(--slate-200);">
+                        {{ rx.doctor_notes or 'Routine health precautions.' }}
+                        {% if rx.follow_up_date %}
+                        <div style="margin-top:0.5rem; font-weight:700; color:var(--primary);">
+                            <i class="fas fa-calendar-alt"></i> Follow-up scheduled for: {{ rx.follow_up_date }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Write New Prescription Modal -->
+<div class="modal-overlay" id="newPrescriptionModal">
+    <div class="modal-container large">
+        <div class="modal-header">
+            <h3 class="modal-title"><i class="fas fa-file-prescription" style="color:var(--primary); margin-right:8px;"></i> Write Digital Prescription</h3>
+            <button class="modal-close" onclick="closeModal('newPrescriptionModal')"><i class="fas fa-times"></i></button>
+        </div>
+        <form action="/api/prescriptions" method="POST">
+            <div class="modal-body">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Select Patient *</label>
+                        <select name="patient_id" class="form-control" required>
+                            {% for p in patients %}
+                            <option value="{{ p.id }}" {% if preselected_patient == p.id %}selected{% endif %}>{{ p.name }} ({{ p.patient_uid }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Consulting Doctor *</label>
+                        <select name="doctor_id" class="form-control" required>
+                            {% for d in doctors %}
+                            <option value="{{ d.id }}" {% if preselected_doctor == d.id %}selected{% endif %}>{{ d.name }} - {{ d.department }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 2fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Clinical Diagnosis *</label>
+                        <input type="text" name="diagnosis" class="form-control" placeholder="e.g. Acute Bacterial Pharyngitis / Hypertension Grade II" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ICD-10 Code</label>
+                        <input type="text" name="icd_code" class="form-control" placeholder="e.g. J02.9 / I10">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Presenting Symptoms</label>
+                    <input type="text" name="symptoms" class="form-control" placeholder="e.g. Sore throat, fever of 101F for 3 days, difficulty swallowing">
+                </div>
+
+                <!-- Dynamic Medicines -->
+                <div style="background:var(--slate-50); border:1px solid var(--slate-200); border-radius:var(--radius-md); padding:1rem; margin-bottom:1rem;">
+                    <label class="form-label" style="font-weight:700; color:var(--slate-800);"><i class="fas fa-pills" style="color:var(--primary);"></i> Add Primary Medication</label>
+                    <div style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap:0.75rem;">
+                        <div>
+                            <input type="text" name="med_name_1" class="form-control" placeholder="Medicine (e.g. Augmentin 625mg)" required>
+                        </div>
+                        <div>
+                            <input type="text" name="med_dose_1" class="form-control" placeholder="Dose (1 Tab)" value="1 Tab">
+                        </div>
+                        <div>
+                            <input type="text" name="med_freq_1" class="form-control" placeholder="Freq (TID / BID)" value="Twice daily">
+                        </div>
+                        <div>
+                            <input type="text" name="med_dur_1" class="form-control" placeholder="Duration (5 Days)" value="5 Days">
+                        </div>
+                    </div>
+                    <div style="margin-top:0.5rem;">
+                        <input type="text" name="med_inst_1" class="form-control" placeholder="Instructions (e.g. After food with plenty of water)" value="After food">
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Diagnostic / Lab Orders</label>
+                        <input type="text" name="lab_order" class="form-control" placeholder="e.g. CBC, ESR, Fasting Blood Sugar">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Follow-up Date</label>
+                        <input type="date" name="follow_up_date" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Doctor's Clinical Notes & Dietary Advice</label>
+                    <textarea name="doctor_notes" class="form-control" rows="2" placeholder="Rest, hydration, avoid cold fluids, return if symptoms worsen..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeModal('newPrescriptionModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Sign & Issue Prescription</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
