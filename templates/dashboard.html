@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block page_title %}Executive Clinical Dashboard{% endblock %}
-{% block page_subtitle %}St. Metropolitan Medical Center — Live Operations Telemetry{% endblock %}
+{% block page_subtitle %}Sanjeevani Super-Speciality Hospital — Live Operations Telemetry{% endblock %}
 
 {% block content %}
 <!-- Top KPI Summary Cards -->
@@ -50,8 +50,8 @@
         </div>
         <div class="stat-content">
             <div class="stat-label">Hospital Revenue</div>
-            <div class="stat-value">${{ "%.2f"|format(metrics.total_revenue) }}</div>
-            <div class="stat-sub"><i class="fas fa-hourglass-half" style="color:var(--slate-400);"></i> ${{ "%.2f"|format(metrics.pending_revenue) }} Pending Claims</div>
+            <div class="stat-value">₹{{ "%.2f"|format(metrics.total_revenue) }}</div>
+            <div class="stat-sub"><i class="fas fa-hourglass-half" style="color:var(--slate-400);"></i> ₹{{ "%.2f"|format(metrics.pending_revenue) }} Pending Claims</div>
         </div>
     </div>
 </div>

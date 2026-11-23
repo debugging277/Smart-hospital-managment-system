@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block page_title %}Medical Specialists & Department Directory{% endblock %}
-{% block page_subtitle %}St. Metropolitan Physician Registry, Qualifications, and Shifts{% endblock %}
+{% block page_subtitle %}Sanjeevani Physician Registry, Qualifications, and Shifts{% endblock %}
 
 {% block content %}
 <!-- Department Filter Pills -->
@@ -48,7 +48,7 @@
                 </div>
                 <div style="display:flex; justify-content:space-between;">
                     <span style="color:var(--slate-500);"><i class="fas fa-tag"></i> Fee:</span>
-                    <strong style="color:var(--teal); font-size:0.9rem;">${{ "%.2f"|format(doc.consultation_fee) }} / visit</strong>
+                    <strong style="color:var(--teal); font-size:0.9rem;">₹{{ "%.2f"|format(doc.consultation_fee) }} / visit</strong>
                 </div>
             </div>
 

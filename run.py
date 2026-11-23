@@ -19,7 +19,7 @@ def open_browser():
     time.sleep(1.5)
     url = "http://127.0.0.1:8000"
     print(f"\n=======================================================")
-    print(f"🏥 St. Metropolitan Smart Hospital Management System")
+    print(f"🏥 Sanjeevani Super-Speciality Hospital Management System")
     print(f"🌐 Access Web Dashboard: {url}")
     print(f"📚 Interactive Swagger API Docs: {url}/docs")
     print(f"=======================================================\n")

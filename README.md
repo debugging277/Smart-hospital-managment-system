@@ -1,6 +1,6 @@
-# 🏥 St. Metropolitan Smart Hospital Management System (HMS)
+# 🏥 Sanjeevani Super-Speciality Hospital Management System (HMS)
 
-An enterprise-grade, clinical Hospital Management System built with **Python, FastAPI, SQLite, and Modern Hospital-Grade UI/UX**.
+An enterprise-grade, clinical Hospital Management System tailored for Indian healthcare, built with **Python, FastAPI, SQLite, and Modern Hospital-Grade UI/UX**.
 
 ---
 

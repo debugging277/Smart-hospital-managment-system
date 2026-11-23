@@ -60,7 +60,7 @@ def init_db():
         phone TEXT,
         email TEXT,
         shift TEXT,
-        consultation_fee REAL DEFAULT 50.0,
+        consultation_fee REAL DEFAULT 500.0,
         status TEXT DEFAULT 'Available', -- 'Available', 'In Consultation', 'On Round', 'Off Duty'
         rating REAL DEFAULT 4.8
     );
@@ -580,7 +580,7 @@ def create_bill(data: Dict[str, Any]) -> int:
     bill_id = cursor.lastrowid
     conn.commit()
     conn.close()
-    log_activity("Billing", f"Generated invoice {inv_num} for total ${data['total_amount']}")
+    log_activity("Billing", f"Generated invoice {inv_num} for total ₹{data['total_amount']}")
     return bill_id
 
 

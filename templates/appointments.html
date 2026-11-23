@@ -142,7 +142,7 @@
                         <label class="form-label">Attending Doctor / Department *</label>
                         <select name="doctor_id" class="form-control" required>
                             {% for d in doctors %}
-                            <option value="{{ d.id }}">{{ d.name }} - {{ d.department }} (${{ d.consultation_fee }})</option>
+                            <option value="{{ d.id }}">{{ d.name }} - {{ d.department }} (₹{{ d.consultation_fee }})</option>
                             {% endfor %}
                         </select>
                     </div>

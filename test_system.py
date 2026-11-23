@@ -18,7 +18,7 @@ client = TestClient(app)
 def test_pages():
     print("Testing HTML page routes...")
     pages = [
-        ("/", 200, "St. Metropolitan"),
+        ("/", 200, "Sanjeevani"),
         ("/patients", 200, "Patient Registry"),
         ("/appointments", 200, "OPD Queue"),
         ("/doctors", 200, "Medical Specialists"),
@@ -41,11 +41,11 @@ def test_apis():
 
     # 1. Create Patient
     res = client.post("/api/patients", json={
-        "name": "Bruce Wayne",
+        "name": "Rajesh Khanna",
         "age": 40,
         "gender": "Male",
         "blood_group": "O+",
-        "phone": "+1 (555) 999-1122",
+        "phone": "+91 98111 22334",
         "admission_status": "Outpatient"
     })
     assert res.status_code == 200

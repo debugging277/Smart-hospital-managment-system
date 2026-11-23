@@ -255,7 +255,7 @@ async function dispenseMedicine(medId, currentStock) {
 
 // Settle Invoice Bill
 async function settleBill(billId) {
-    const method = prompt("Select Payment Method:\n1. Cash\n2. Credit Card\n3. UPI/Digital\n4. Insurance Direct", "Credit Card");
+    const method = prompt("Select Payment Method:\n1. UPI (GPay / PhonePe / Paytm)\n2. Cash\n3. Debit / Credit Card\n4. Ayushman Bharat (PM-JAY)\n5. TPA Mediclaim", "UPI (Google Pay)");
     if (!method) return;
 
     try {

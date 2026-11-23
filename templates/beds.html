@@ -54,7 +54,7 @@
             {% endif %}
             <span>{{ ward_name }}</span>
             <span style="font-size:0.8rem; font-weight:normal; color:var(--slate-500); margin-left:8px;">
-                (${{ "%.2f"|format(ward_beds[0].daily_rate) }}/day • {{ ward_beds[0].floor }})
+                (₹{{ "%.2f"|format(ward_beds[0].daily_rate) }}/day • {{ ward_beds[0].floor }})
             </span>
         </div>
         <div>
