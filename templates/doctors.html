@@ -6,14 +6,24 @@
 {% block content %}
 <!-- Department Filter Pills -->
 <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom: 1.5rem;">
-    <a href="/doctors" class="btn btn-outline btn-sm {% if not current_dept or current_dept == 'All' %}btn-primary{% endif %}">All Specialties</a>
+    <a href="/doctors" class="btn btn-outline btn-sm {% if not current_dept or current_dept == 'All' %}btn-primary{% endif %}">All Specialties (24)</a>
     <a href="/doctors?dept=Cardiology" class="btn btn-outline btn-sm {% if current_dept == 'Cardiology' %}btn-primary{% endif %}"><i class="fas fa-heartbeat"></i> Cardiology</a>
     <a href="/doctors?dept=Neurology" class="btn btn-outline btn-sm {% if current_dept == 'Neurology' %}btn-primary{% endif %}"><i class="fas fa-brain"></i> Neurology</a>
     <a href="/doctors?dept=Orthopedics" class="btn btn-outline btn-sm {% if current_dept == 'Orthopedics' %}btn-primary{% endif %}"><i class="fas fa-bone"></i> Orthopedics</a>
     <a href="/doctors?dept=Pediatrics" class="btn btn-outline btn-sm {% if current_dept == 'Pediatrics' %}btn-primary{% endif %}"><i class="fas fa-baby"></i> Pediatrics</a>
     <a href="/doctors?dept=General Medicine" class="btn btn-outline btn-sm {% if current_dept == 'General Medicine' %}btn-primary{% endif %}"><i class="fas fa-stethoscope"></i> General Med</a>
     <a href="/doctors?dept=Emergency Medicine" class="btn btn-outline btn-sm {% if current_dept == 'Emergency Medicine' %}btn-primary{% endif %}"><i class="fas fa-ambulance"></i> Emergency</a>
+    <a href="/doctors?dept=Obstetrics %26 Gynecology" class="btn btn-outline btn-sm {% if current_dept == 'Obstetrics & Gynecology' %}btn-primary{% endif %}"><i class="fas fa-female"></i> Gynaecology</a>
     <a href="/doctors?dept=Pulmonology" class="btn btn-outline btn-sm {% if current_dept == 'Pulmonology' %}btn-primary{% endif %}"><i class="fas fa-lungs"></i> Pulmonology</a>
+    <a href="/doctors?dept=Gastroenterology" class="btn btn-outline btn-sm {% if current_dept == 'Gastroenterology' %}btn-primary{% endif %}"><i class="fas fa-stomach"></i> Gastroenterology</a>
+    <a href="/doctors?dept=Nephrology" class="btn btn-outline btn-sm {% if current_dept == 'Nephrology' %}btn-primary{% endif %}"><i class="fas fa-kidneys"></i> Nephrology</a>
+    <a href="/doctors?dept=Oncology" class="btn btn-outline btn-sm {% if current_dept == 'Oncology' %}btn-primary{% endif %}"><i class="fas fa-ribbon"></i> Oncology</a>
+    <a href="/doctors?dept=Ophthalmology" class="btn btn-outline btn-sm {% if current_dept == 'Ophthalmology' %}btn-primary{% endif %}"><i class="fas fa-eye"></i> Ophthalmology</a>
+    <a href="/doctors?dept=ENT" class="btn btn-outline btn-sm {% if current_dept == 'ENT' %}btn-primary{% endif %}"><i class="fas fa-head-side-cough"></i> ENT</a>
+    <a href="/doctors?dept=Urology" class="btn btn-outline btn-sm {% if current_dept == 'Urology' %}btn-primary{% endif %}"><i class="fas fa-bacteria"></i> Urology</a>
+    <a href="/doctors?dept=Dermatology" class="btn btn-outline btn-sm {% if current_dept == 'Dermatology' %}btn-primary{% endif %}"><i class="fas fa-hand-dots"></i> Dermatology</a>
+    <a href="/doctors?dept=General Surgery" class="btn btn-outline btn-sm {% if current_dept == 'General Surgery' %}btn-primary{% endif %}"><i class="fas fa-cut"></i> Surgery</a>
+    <a href="/doctors?dept=Endocrinology" class="btn btn-outline btn-sm {% if current_dept == 'Endocrinology' %}btn-primary{% endif %}"><i class="fas fa-vial"></i> Endocrinology</a>
 </div>
 
 <!-- Doctors Grid -->

@@ -38,7 +38,7 @@
                 <a href="/patients" class="nav-link {% if active_page == 'patients' %}active{% endif %}">
                     <i class="fas fa-users-medical"></i>
                     <span>Patients & EHR</span>
-                    <span class="nav-badge">{{ total_patients or 10 }}</span>
+                    <span class="nav-badge">{{ total_patients if total_patients is not none else 0 }}</span>
                 </a>
                 <a href="/appointments" class="nav-link {% if active_page == 'appointments' %}active{% endif %}">
                     <i class="fas fa-calendar-check"></i>
