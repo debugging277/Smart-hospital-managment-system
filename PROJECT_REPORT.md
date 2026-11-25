@@ -21,8 +21,8 @@
 <br>
 
 **Submitted By:**  
-**Name:** Rohan Pal  
-**Project Domain:** Full-Stack Python Web Development & Clinical AI  
+**Name:** Sonu Kumar Verma  
+**Project Domain:** Full-Stack Python Web Development & Relational Database Engineering  
 **Academic Session:** 2026  
 
 </div>
@@ -33,9 +33,9 @@
 
 <div style="border: 2px solid #0284c7; padding: 25px; border-radius: 8px; background: #f8fafc;">
 
-This is to certify that **Rohan Pal** has successfully completed his Summer Training & Internship program at **YP Edutech**.
+This is to certify that **Sonu Kumar Verma** has successfully completed his Summer Training & Internship program at **YP Edutech**.
 
-During the internship period, he undertook comprehensive training in **Advanced Python Web Architecture, FastAPI, Relational Database Modeling with SQLite3, Responsive UI/UX Engineering, and Applied Predictive Machine Learning**. 
+During the internship period, he undertook comprehensive, rigorous training in **Full Python Programming (Core Fundamentals, Object-Oriented Design, Standard & Modern Ecosystem Libraries), Relational Database Engineering (RDBMS Architecture, 3NF Normalization, Advanced SQL, ACID Transactions, SQLite3), Asynchronous Web Backends (FastAPI, Uvicorn, Pydantic), and Applied Clinical AI Analytics**. 
 
 As part of his curriculum and practical capstone, he independently designed and developed the enterprise-grade project titled:
 
@@ -43,7 +43,7 @@ As part of his curriculum and practical capstone, he independently designed and 
 
 The project encompasses patient electronic health records (EHR), an automated OPD token caller, a directory of 24 specialist physicians, dynamic bed allocation across 6 wards, digital prescriptions with ICD tagging, an inventory POS dispensary, itemized billing with Indian payment mechanisms (UPI / Ayushman Bharat), and an integrated Clinical AI Suite.
 
-His performance, technical acumen, problem-solving skills, and dedication throughout the tenure were found to be **Outstanding**.
+His performance, technical acumen, database modeling capabilities, problem-solving skills, and dedication throughout the tenure were found to be **Outstanding**.
 
 <br><br>
 <div style="display: flex; justify-content: space-between; margin-top: 40px;">
@@ -76,7 +76,7 @@ The matter embodied in this report has not been submitted by me or anyone else f
 
 <div style="text-align: right;">
     ____________________________<br>
-    <strong>Rohan Pal</strong><br>
+    <strong>Sonu Kumar Verma</strong><br>
     Intern, YP Edutech
 </div>
 
@@ -86,12 +86,12 @@ The matter embodied in this report has not been submitted by me or anyone else f
 
 I would like to express my profound gratitude to **YP Edutech** for providing me with this invaluable opportunity to undergo summer industrial training and gain hands-on expertise in industry-standard software engineering practices.
 
-I am deeply indebted to my project mentors and trainers at **YP Edutech** for their constant guidance, valuable technical feedback, and encouragement throughout the lifecycle of this project. Their mentorship in modern backend architectures (FastAPI), asynchronous programming, database normalization, and clinical AI modeling was pivotal to the success of this system.
+I am deeply indebted to my project mentors and trainers at **YP Edutech** for their constant guidance, valuable technical feedback, and encouragement throughout the lifecycle of this project. Their mentorship in core and advanced Python, standard and third-party libraries, relational database design and normalization, modern backend architectures (FastAPI), asynchronous programming, and clinical AI modeling was pivotal to the success of this system.
 
 I also extend my sincere thanks to my college faculty members, my family, and my peers who provided continuous motivation and constructive suggestions during the development and documentation phases.
 
 <div style="text-align: right;">
-    <strong>— Rohan Pal</strong>
+    <strong>— Sonu Kumar Verma</strong>
 </div>
 
 ---
@@ -100,7 +100,7 @@ I also extend my sincere thanks to my college faculty members, my family, and my
 
 1. **Chapter 1: Introduction & Company Profile**
    - 1.1 About YP Edutech
-   - 1.2 Training Objectives & Learning Outcomes
+   - 1.2 Training Objectives & Technical Curriculum Breakdown (Full Python & Relational Database Engineering)
    - 1.3 Project Background & Clinical Motivation
    - 1.4 Problem Statement of Traditional Healthcare Systems
    - 1.5 Objectives & Scope of the Project
@@ -180,13 +180,82 @@ Automated verification tests confirm a **100% test pass rate**, validating the s
 
 The training methodology at YP Edutech emphasizes real-world, industry-standard project development, clean code principles, version control workflows (Git/GitHub), architectural design patterns, and agile testing methodologies.
 
-### 1.2 Training Objectives & Learning Outcomes
-The primary goals of the summer training program were:
-- **Mastery of Modern Python Backends**: Transitioning from synchronous paradigms to modern asynchronous web micro-frameworks (**FastAPI**, Starlette, Pydantic).
-- **Database Modeling & Relational Integrity**: Designing 3rd Normal Form (3NF) databases in SQLite, managing foreign keys, transactional integrity, and JSON document embedding within relational rows.
-- **Full-Stack Interface Engineering**: Creating hospital-grade responsive user interfaces without heavy JavaScript frontend frameworks, leveraging lightweight vanilla JavaScript and Jinja2 templating for lightning-fast server-side rendering (SSR).
-- **Applied AI & Algorithmic Triage**: Engineering clinical rule engines, natural language keyword matching for medical specialties, and predictive multi-factor risk calculators.
-- **Software Engineering Rigor**: Writing automated test clients, adhering to PEP 8 standards, and managing GitHub repositories with clean documentation.
+### 1.2 Training Objectives & Technical Curriculum Breakdown
+
+The summer industrial training at **YP Edutech** followed an intensive, hands-on curriculum structured to bridge the gap between academic theory and enterprise production engineering. The training was anchored around two primary technical pillars: **Full-Stack Python Software Development (including extensive library mastery)** and **Comprehensive Relational Database Engineering & Management**.
+
+#### 1.2.1 Module 1: Comprehensive Python Programming Mastery
+
+The candidate underwent end-to-end training across the complete Python ecosystem:
+
+1. **Core Language Fundamentals & Advanced Syntax**:
+   - Primitive data types (`int`, `float`, `str`, `bool`) and collection data structures (`list`, `tuple`, `dict`, `set`).
+   - Deep dive into collection mutability, memory references, shallow vs. deep copies (`copy` module).
+   - Advanced control flow, conditional expressions, and looping patterns (`enumerate`, `zip`, `reversed`).
+   - List comprehensions, dictionary comprehensions, set comprehensions, and generator expressions for memory-efficient lazy evaluation.
+   - First-class and higher-order functions: `lambda`, `map`, `filter`, `functools.reduce`, function closures, and custom decorators (`@functools.wraps`).
+   - Robust exception handling hierarchies: `try`, `except`, `else`, `finally`, raising custom exception classes, and defensive input assertion.
+   - File I/O workflows, text and binary streams, and context management protocols (`with` statement, `__enter__`, `__exit__`).
+
+2. **Object-Oriented Programming (OOP) Paradigm**:
+   - Class definitions, object instantiation, state encapsulation, and data hiding using private/protected naming conventions (`_protected`, `__private`).
+   - Inheritance architectures: single, multiple, hierarchical, and method resolution order (`MRO` / `super()`).
+   - Polymorphism and dynamic method dispatch; abstract base classes (`abc.ABC`, `@abstractmethod`).
+   - Dunder (Magic) methods implementation: `__init__`, `__str__`, `__repr__`, `__len__`, `__getitem__`, `__iter__`, `__call__`, `__eq__`.
+   - Method decorators: `@property`, `@<field>.setter`, `@classmethod`, `@staticmethod`.
+   - Design patterns in Python: Singleton pattern (for database connection pooling), Factory pattern (for patient record factories), and Strategy pattern (for billing calculations).
+
+3. **In-Depth Python Standard Library Mastery**:
+   - `sqlite3`: Native relational database engine interface, connection lifecycle management, `cursor` execution, transaction commit/rollback, row factory (`sqlite3.Row`), and executing PRAGMA commands.
+   - `json`: Parsing (`json.loads`), formatting/serializing (`json.dumps`), custom encoders, handling nested dictionary structures, and embedding JSON payloads inside relational columns.
+   - `datetime` & `time`: Date arithmetic (`timedelta`), timezone awareness, formatting/parsing (`strftime`, `strptime`), ISO 8601 string formatting, and clinical timestamps.
+   - `math` & `random`: Clinical formulas, rounding functions, pseudorandom distributions for simulated inpatient bed occupancy, and odds-ratio risk modeling.
+   - `os`, `sys` & `pathlib`: Cross-platform filesystem navigation, directory traversal, absolute path resolution, and system exit hooks.
+   - `typing`: Static typing annotations (`Optional`, `Union`, `List`, `Dict`, `Tuple`, `Callable`, `Any`), type hints, and self-documenting code bases.
+   - `re`: Regular expressions for pattern matching, data extraction, and input validation (e.g., Indian 10-digit mobile numbers, ABHA health identifiers).
+   - `hashlib`: Cryptographic hashing algorithms (SHA-256) for secure token generation and sensitive data integrity.
+
+4. **Modern Third-Party Python Frameworks & Libraries**:
+   - **FastAPI**: Modern, high-performance web framework for building REST APIs with Python 3.10+ types, dependency injection systems, asynchronous route handlers (`async def`), OpenAPI / Swagger automatic documentation, and path/query parameter handling.
+   - **Pydantic (v2)**: Advanced data parsing, strict runtime validation, BaseModel class definitions, Field constraints, custom model validators, and error reporting.
+   - **Uvicorn**: Asynchronous Server Gateway Interface (ASGI) high-concurrency web server handling non-blocking I/O event loops.
+   - **Jinja2**: Server-side templating engine, template inheritance (`base.html`), macro generation, conditional rendering, loops, and contextual filters for clinical UI components.
+   - **Starlette**: Low-level ASGI toolkit, StaticFiles mounting, request/response lifecycle, and custom HTTP exception handlers.
+   - **HTTPX & Requests**: Synchronous and asynchronous HTTP clients for building automated test suites and simulating concurrent API requests.
+
+---
+
+#### 1.2.2 Module 2: Comprehensive Relational Database Engineering & Management
+
+A major focus of the YP Edutech summer training was end-to-end database engineering, ensuring students master the art of designing, querying, and administering relational databases:
+
+1. **Relational Database Management Systems (RDBMS) Fundamentals**:
+   - Relational data model principles, entity-relationship (ER) theory, cardinality, and constraints.
+   - Primary Keys (PK), Foreign Keys (FK), Surrogate Keys (e.g., `patient_uid`), Unique Keys (UK), and Check Constraints.
+   - Referential integrity rules: cascading updates, cascading deletes (`ON DELETE CASCADE`), and foreign key enforcement (`PRAGMA foreign_keys = ON`).
+
+2. **Database Normalization**:
+   - Systematic relational decomposition from Unnormalized Form (UNF) through First Normal Form (1NF), Second Normal Form (2NF), and Third Normal Form (3NF).
+   - Eliminating partial dependencies, transitive dependencies, multi-valued attributes, and redundancy.
+   - Practical application: normalising the hospital schema into 7 distinct entity tables (`patients`, `doctors`, `beds`, `appointments`, `prescriptions`, `medicines`, `bills`), ensuring zero data anomalies during updates and deletions.
+
+3. **Advanced Structured Query Language (SQL) Mastery**:
+   - **Data Definition Language (DDL)**: `CREATE TABLE`, `ALTER TABLE`, `DROP TABLE`, column data types (`INTEGER`, `TEXT`, `REAL`, `BLOB`), constraints (`PRIMARY KEY AUTOINCREMENT`, `NOT NULL`, `DEFAULT`, `CHECK`).
+   - **Data Manipulation Language (DML)**: Complex `INSERT INTO`, bulk inserts, conditional `UPDATE` statements, and parameterized `DELETE` operations.
+   - **Data Query Language (DQL)**:
+     - Multi-table `JOIN` operations: `INNER JOIN`, `LEFT OUTER JOIN`, self-joins, and subqueries.
+     - Grouping & Aggregations: `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`, accompanied by `GROUP BY` and `HAVING` filters (e.g., calculating total revenue collected per payment channel, bed occupancy percentages per ward).
+     - Conditional query expressions (`CASE WHEN ... THEN ... ELSE ... END`).
+     - Sorting and pagination: `ORDER BY`, `LIMIT`, and `OFFSET`.
+
+4. **Transaction Management & ACID Principles**:
+   - Deep understanding of ACID properties: **Atomicity** (all-or-nothing operations), **Consistency** (state valid before and after), **Isolation** (concurrent transaction safety), and **Durability** (committed data persistence).
+   - Practical transaction handling: atomic hospital billing and pharmacy dispensing (deducting medicine stock in `medicines` and creating invoice line items in `bills` within an atomic commit, rolling back on any failure).
+
+5. **Security, Performance & Embedded Optimization**:
+   - **SQL Injection Defense**: Strict avoidance of raw string formatting (`f"SELECT ..."`), enforcing 100% parameterized query execution (`cursor.execute(sql, (val1, val2))`).
+   - **SQLite3 Internal Architecture**: Embedded single-file storage, WAL (Write-Ahead Logging) mode, zero-daemon deployment, and `sqlite3.Row` factory configuration enabling named column access.
+   - **Hybrid Relational-Document Architecture**: Leveraging text columns to store structured JSON payloads (such as multi-drug prescription schedules and diagnostic lab test batteries) to maintain strict 3NF relational integrity while avoiding table bloat for dynamic clinical sub-items.
 
 ### 1.3 Project Background & Clinical Motivation
 In a bustling healthcare facility, minutes matter. The COVID-19 pandemic and post-pandemic surges highlighted severe deficiencies in hospital coordination:
@@ -491,10 +560,18 @@ erDiagram
 
 ## CHAPTER 5: IMPLEMENTATION & TECHNICAL DETAILS
 
-### 5.1 Asynchronous Backend with FastAPI
-The backend application (`app.py`) utilizes modern Python 3 asynchronous syntax (`async`/`await`). FastAPI manages HTTP page rendering via `Jinja2Templates` and processes JSON API payloads concurrently.
+### 5.1 Asynchronous Backend Architecture & Python Library Ecosystem
+The backend application (`app.py`) leverages modern Python 3.13 asynchronous features (`async`/`await`) and an enterprise library pipeline:
+- **FastAPI**: Manages routing, asynchronous dependency injection, request-response validation, and auto-generated interactive OpenAPI/Swagger documentation (`/docs`).
+- **Pydantic**: Enforces strict schema validation for clinical payloads (e.g., patient registration, doctor triage inputs, and invoice generation), rejecting malformed inputs with clear HTTP 422 errors.
+- **Jinja2**: Renders hospital dashboards and reports server-side (`Jinja2Templates`), using template inheritance with block overrides (`{% extends "base.html" %}`).
+- **Python Standard Library Integrations**:
+  - `sqlite3` for zero-overhead, ACID-compliant relational persistence.
+  - `json` for serializing multi-element prescriptions and allergy lists into SQLite columns.
+  - `datetime` and `time` for calculating consultation durations, bed occupancy days, and ISO-standard timestamps.
+  - `typing` (`Optional`, `List`, `Dict`, `Union`) to maintain clean, self-documenting type contracts across all route handlers.
 
-A lifespan context manager ensures schema synchronization upon server boot:
+A lifespan context manager ensures schema synchronization and data integrity upon server boot:
 ```python
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -504,8 +581,8 @@ async def lifespan(app: FastAPI):
     yield
 ```
 
-### 5.2 SQLite3 Database Engine & Relational Integrity
-In `database.py`, SQLite connections are configured with foreign key enforcement and row factory encapsulation:
+### 5.2 Relational Database Engineering & Schema Integrity
+In `database.py`, SQLite relational connections are configured with foreign key enforcement and row factory encapsulation:
 ```python
 def get_db_connection() -> sqlite3.Connection:
     conn = sqlite3.connect(DB_PATH)
@@ -513,7 +590,11 @@ def get_db_connection() -> sqlite3.Connection:
     conn.execute("PRAGMA foreign_keys = ON")
     return conn
 ```
-This guarantees that deleting a patient automatically cleans up linked appointments or cascades appropriately, preventing dangling records in the healthcare database.
+Key architectural database highlights include:
+1. **Referential Integrity & Cascading**: With `PRAGMA foreign_keys = ON`, deleting or updating parent records cascades seamlessly (e.g., patient discharges and linked appointments), preventing dangling records.
+2. **ACID Transaction Guarantees**: Multi-step workflows (such as dispensing pharmacy drugs while concurrently creating an itemized bill) are wrapped inside atomic transactions, rolling back upon any exception.
+3. **Parameterized SQL Defense**: Every database query uses explicit parameter binding (`?` placeholders) rather than string interpolation, providing ironclad immunity against SQL Injection attacks.
+4. **Row Factory Optimization**: `sqlite3.Row` provides index and key-based column lookups, combining Python dictionary convenience with tuple performance.
 
 ### 5.3 Clinical AI Intelligence Suite
 
@@ -640,13 +721,23 @@ ALL SYSTEM & AI TESTS PASSED PERFECTLY (100% SUCCESS)
 
 ## CHAPTER 8: CONCLUSION & FUTURE SCOPE
 
-### 8.1 Key Learnings from YP Edutech Summer Training
-The development of the Sanjeevani Smart Hospital Management System at **YP Edutech** provided profound practical experience in:
-- Building enterprise-grade, high-throughput asynchronous web backends using Python and FastAPI.
-- Implementing robust data normalization, foreign key cascades, and transactional integrity in SQLite3.
-- Crafting hospital-grade, accessible user experiences using clean CSS design systems and Chart.js.
-- Engineering practical clinical rule engines and predictive healthcare algorithms.
-- Developing automated test suites to ensure software reliability and zero-defect deployments.
+### 8.1 Key Technical Learnings & Professional Competencies
+The development of the Sanjeevani Smart Hospital Management System at **YP Edutech** provided profound practical experience and end-to-end mastery in:
+- **Comprehensive Python Programming & Ecosystem Mastery**:
+  - Deep command over Python core constructs: custom exceptions, comprehension pipelines, higher-order functions, generator expressions, and context managers.
+  - Object-Oriented Software Design: encapsulation, inheritance hierarchies, abstract base classes, dunder protocols, and property decorators.
+  - In-depth utilization of standard libraries: `sqlite3`, `json`, `datetime`, `math`, `os`, `sys`, `typing`, `re`, and `hashlib`.
+  - Production-grade third-party libraries: `FastAPI` (asynchronous routing & OpenAPI), `Pydantic` (strict type parsing & schema validation), `Uvicorn` (ASGI runtime), `Jinja2` (server-side templating), and `HTTPX` (automated test clients).
+- **Enterprise Relational Database Engineering & Management**:
+  - Relational schema modeling and formal 3rd Normal Form (3NF) normalization to eliminate insertion, update, and deletion anomalies.
+  - Complex SQL mastery: multi-table `JOIN` operations, aggregate statistical queries (`SUM`, `AVG`, `COUNT`), `GROUP BY`, `HAVING`, and nested subqueries.
+  - ACID transaction guarantees ensuring atomicity across multi-step hospital transactions (pharmacy inventory decrements synchronized with bill generation).
+  - Parameterized query enforcement ensuring 100% defense against SQL injection attacks.
+  - SQLite optimization using `PRAGMA foreign_keys = ON` and `sqlite3.Row` factory integration.
+- **Asynchronous Architecture & High-Performance Web Services**: Transitioning from traditional synchronous Python to modern ASGI asynchronous event loops, yielding sub-50ms endpoint latencies.
+- **Full-Stack Clinical UI/UX & Responsive Engineering**: Crafting clean, hospital-grade layouts and interactive real-time telemetry monitors with HTML5, CSS3, and Chart.js without external frontend framework overhead.
+- **Applied Clinical Intelligence & Algorithmic Triage**: Designing multi-parameter clinical rule engines, natural language keyword matching for medical triage, and multi-factor risk scoring algorithms.
+- **Software Engineering Lifecycle & Verification**: Implementing end-to-end regression testing suites (`test_system.py`) achieving a 100% pass rate, coupled with Git version control discipline.
 
 ### 8.2 Project Milestones Achieved
 - **100% Zero-Error Test Execution**: All page routes and API endpoints verified with automated unit tests.

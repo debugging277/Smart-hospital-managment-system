@@ -53,7 +53,7 @@ An enterprise-grade, clinical Hospital Management System tailored for Indian hea
 
 ### 1. Installation
 ```bash
-cd "C:\Users\Rohan Pal\.gemini\antigravity\scratch\hospital_management_system"
+cd hospital_management_system
 pip install -r requirements.txt
 ```
 
