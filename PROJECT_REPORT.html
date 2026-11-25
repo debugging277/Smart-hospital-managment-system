@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjeevani Smart HMS - Summer Training Project Report | Sonu Kumar Verma</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.0/github-markdown.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+        body {
+            background: #f1f5f9;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #1e293b;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+        .report-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 50px 60px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .markdown-body {
+            font-family: inherit;
+            font-size: 15px;
+            color: #1e293b;
+        }
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+            border-bottom: none;
+            color: #0f172a;
+        }
+        .markdown-body h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0369a1;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+        .markdown-body h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-top: 32px;
+        }
+        .markdown-body h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #0284c7;
+            margin-top: 24px;
+        }
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        .markdown-body table th {
+            background-color: #f8fafc;
+            color: #0f172a;
+            font-weight: 600;
+            border: 1px solid #cbd5e1;
+            padding: 10px 14px;
+        }
+        .markdown-body table td {
+            border: 1px solid #e2e8f0;
+            padding: 9px 14px;
+        }
+        .markdown-body pre {
+            background: #0f172a;
+            color: #f8fafc;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 13px;
+        }
+        .markdown-body code {
+            background-color: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #0369a1;
+            font-weight: 500;
+        }
+        .markdown-body pre code {
+            background-color: transparent;
+            color: #f8fafc;
+            padding: 0;
+        }
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #0284c7;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+            transition: all 0.2s;
+            z-index: 1000;
+        }
+        .print-btn:hover {
+            background: #0369a1;
+            transform: translateY(-2px);
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .report-container {
+                max-width: 100%;
+                padding: 0;
+                box-shadow: none;
+            }
+            .print-btn {
+                display: none;
+            }
+            h2 {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+    <div class="report-container markdown-body">
+        <h1>🏥 SUMMER INTERNSHIP &amp; TRAINING PROJECT REPORT</h1>
+<hr />
+<div align="center">
+
+# A PROJECT REPORT ON
+## **SANJEEVANI SMART HOSPITAL MANAGEMENT SYSTEM**
+### *An Enterprise Clinical Healthcare Platform with AI-Assisted Triage & Predictive Analytics*
+
+<br>
+
+**Submitted in Partial Fulfillment of the Requirements for the Award of the Degree / Diploma**
+
+<br>
+
+**Carried out at:**  
+### **YP EDUTECH**  
+*(Summer Internship & Industrial Training Program)*
+
+<br>
+
+**Submitted By:**  
+**Name:** Sonu Kumar Verma  
+**Project Domain:** Full-Stack Python Web Development & Relational Database Engineering  
+**Academic Session:** 2026  
+
+</div>
+
+<hr />
+<h2>📜 CERTIFICATE OF INDUSTRIAL TRAINING</h2>
+<div style="border: 2px solid #0284c7; padding: 25px; border-radius: 8px; background: #f8fafc;">
+
+This is to certify that **Sonu Kumar Verma** has successfully completed his Summer Training & Internship program at **YP Edutech**.
+
+During the internship period, he undertook comprehensive, rigorous training in **Full Python Programming (Core Fundamentals, Object-Oriented Design, Standard & Modern Ecosystem Libraries), Relational Database Engineering (RDBMS Architecture, 3NF Normalization, Advanced SQL, ACID Transactions, SQLite3), Asynchronous Web Backends (FastAPI, Uvicorn, Pydantic), and Applied Clinical AI Analytics**. 
+
+As part of his curriculum and practical capstone, he independently designed and developed the enterprise-grade project titled:
+
+### **"Sanjeevani Super-Speciality Hospital Management System (HMS)"**
+
+The project encompasses patient electronic health records (EHR), an automated OPD token caller, a directory of 24 specialist physicians, dynamic bed allocation across 6 wards, digital prescriptions with ICD tagging, an inventory POS dispensary, itemized billing with Indian payment mechanisms (UPI / Ayushman Bharat), and an integrated Clinical AI Suite.
+
+His performance, technical acumen, database modeling capabilities, problem-solving skills, and dedication throughout the tenure were found to be **Outstanding**.
+
+<br><br>
+<div style="display: flex; justify-content: space-between; margin-top: 40px;">
+    <div>
+        ____________________________<br>
+        <strong>Industry Mentor / Project Head</strong><br>
+        YP Edutech Training Division
+    </div>
+    <div style="text-align: right;">
+        ____________________________<br>
+        <strong>Authorized Signatory</strong><br>
+        YP Edutech Pvt. Ltd.
+    </div>
+</div>
+
+</div>
+
+<hr />
+<h2>✍️ CANDIDATE'S DECLARATION</h2>
+<p>I hereby declare that the summer training project report entitled <strong>"Sanjeevani Smart Hospital Management System"</strong> submitted by me is an authentic record of original work carried out during my summer training at <strong>YP Edutech</strong>.</p>
+<p>The matter embodied in this report has not been submitted by me or anyone else for the award of any other degree or diploma to any institute or university.</p>
+<p><br></p>
+<p><strong>Date:</strong> 25th November 2026<br />
+<strong>Place:</strong> New Delhi, India  </p>
+<div style="text-align: right;">
+    ____________________________<br>
+    <strong>Sonu Kumar Verma</strong><br>
+    Intern, YP Edutech
+</div>
+
+<hr />
+<h2>🙏 ACKNOWLEDGEMENTS</h2>
+<p>I would like to express my profound gratitude to <strong>YP Edutech</strong> for providing me with this invaluable opportunity to undergo summer industrial training and gain hands-on expertise in industry-standard software engineering practices.</p>
+<p>I am deeply indebted to my project mentors and trainers at <strong>YP Edutech</strong> for their constant guidance, valuable technical feedback, and encouragement throughout the lifecycle of this project. Their mentorship in core and advanced Python, standard and third-party libraries, relational database design and normalization, modern backend architectures (FastAPI), asynchronous programming, and clinical AI modeling was pivotal to the success of this system.</p>
+<p>I also extend my sincere thanks to my college faculty members, my family, and my peers who provided continuous motivation and constructive suggestions during the development and documentation phases.</p>
+<div style="text-align: right;">
+    <strong>— Sonu Kumar Verma</strong>
+</div>
+
+<hr />
+<h2>📑 TABLE OF CONTENTS</h2>
+<ol>
+<li><strong>Chapter 1: Introduction &amp; Company Profile</strong></li>
+<li>1.1 About YP Edutech</li>
+<li>1.2 Training Objectives &amp; Technical Curriculum Breakdown (Full Python &amp; Relational Database Engineering)</li>
+<li>1.3 Project Background &amp; Clinical Motivation</li>
+<li>1.4 Problem Statement of Traditional Healthcare Systems</li>
+<li>1.5 Objectives &amp; Scope of the Project</li>
+<li><strong>Chapter 2: Literature Survey &amp; Feasibility Analysis</strong></li>
+<li>2.1 Study of Existing Hospital Information Systems (HIS)</li>
+<li>2.2 Shortcomings of Legacy Systems</li>
+<li>2.3 Feasibility Study (Technical, Operational, Economic)</li>
+<li>2.4 Technology Stack Rationale</li>
+<li><strong>Chapter 3: Software Requirements Specification (SRS)</strong></li>
+<li>3.1 User Characteristics &amp; Roles</li>
+<li>3.2 Functional Requirements (Module Breakdown)</li>
+<li>3.3 Non-Functional Requirements</li>
+<li>3.4 Hardware and Software Prerequisites</li>
+<li><strong>Chapter 4: System Architecture &amp; Design</strong></li>
+<li>4.1 High-Level Architectural Flow</li>
+<li>4.2 Data Flow Diagrams (DFD Level 0 &amp; Level 1)</li>
+<li>4.3 Entity-Relationship (ER) Modeling</li>
+<li>4.4 Relational Database Schema Design</li>
+<li><strong>Chapter 5: Implementation &amp; Technical Architecture</strong></li>
+<li>5.1 Asynchronous Backend with FastAPI &amp; Uvicorn</li>
+<li>5.2 SQLite3 Database Engine &amp; Relational Integrity</li>
+<li>5.3 Clinical AI Intelligence Suite<ul>
+<li>5.3.1 Multi-Specialty Symptom Triage NLP Analyzer</li>
+<li>5.3.2 30-Day Hospital Readmission Risk Scorer</li>
+<li>5.3.3 7-Day Inpatient Bed Occupancy Forecaster</li>
+</ul>
+</li>
+<li>5.4 Frontend Engineering &amp; Hospital-Grade UI Design</li>
+<li>5.5 Indian Healthcare Localization (₹ INR, UPI, PM-JAY, 24 Specialists)</li>
+<li><strong>Chapter 6: Verification, Testing &amp; Quality Assurance</strong></li>
+<li>6.1 Testing Methodologies</li>
+<li>6.2 Automated Test Suite (<code>test_system.py</code>)</li>
+<li>6.3 Test Cases &amp; Execution Matrix</li>
+<li><strong>Chapter 7: Results &amp; Module Walkthrough</strong></li>
+<li>7.1 Executive Dashboard</li>
+<li>7.2 Patient EHR Management</li>
+<li>7.3 OPD Token Queue Caller</li>
+<li>7.4 Ward &amp; Bed Visual Matrix</li>
+<li>7.5 Digital Consultation &amp; Prescription Pad</li>
+<li>7.6 Pharmacy Inventory POS</li>
+<li>7.7 Billing &amp; Multi-Channel Invoicing</li>
+<li><strong>Chapter 8: Conclusion &amp; Future Scope</strong></li>
+<li>8.1 Key Learnings from YP Edutech Internship</li>
+<li>8.2 Project Milestones Achieved</li>
+<li>8.3 Limitations &amp; Future Roadmap</li>
+<li><strong>References &amp; Bibliography</strong></li>
+</ol>
+<hr />
+<h2>🌟 EXECUTIVE SUMMARY / ABSTRACT</h2>
+<p>Healthcare institutions in developing economies face chronic challenges: long outpatient queues, delayed emergency triage, bed allocation bottlenecks, prescription misinterpretations, and cumbersome billing reconciliations. </p>
+<p>During the Summer Training program at <strong>YP Edutech</strong>, the <strong>Sanjeevani Super-Speciality Hospital Management System</strong> was developed to address these inefficiencies using an asynchronous, lightweight, yet enterprise-grade clinical software architecture. </p>
+<p>Built using <strong>Python 3.13</strong>, <strong>FastAPI</strong>, <strong>SQLite3</strong> (with row factories and foreign key cascade enforcement), and an <strong>Indian Hospital Design System</strong> (HTML5, Jinja2, modern CSS3, and Chart.js), the platform streamlines 8 critical operational pillars:<br />
+1. <strong>Executive Operations Dashboard</strong>: Real-time KPI counters, active telemetry, bed occupancy doughnut analytics, and departmental flow charts.<br />
+2. <strong>Electronic Health Records (EHR)</strong>: Demographic tracking, blood groups, allergies, and dynamic admission statuses (<em>Outpatient, Admitted, Discharged, Emergency</em>).<br />
+3. <strong>Automated OPD Token Queue</strong>: Sequential queue token caller preventing physician schedule conflicts.<br />
+4. <strong>Specialist Physician Directory</strong>: Profiling 24 Indian doctors across 17 specialties with OPD consultation shifts, rooms, and fees.<br />
+5. <strong>Interactive Ward &amp; Bed Matrix</strong>: Real-time occupancy control across 6 wards (ICU, Emergency, General Wards A/B, Maternity, VIP Suites).<br />
+6. <strong>E-Prescription &amp; Consultation Pad</strong>: Structured diagnosis tagging with ICD-10 integration, multi-medication dosage orders, lab tests, and printable official clinical letterheads.<br />
+7. <strong>Pharmacy Inventory POS</strong>: Real-time batch and stock control with low-stock and expiry warnings.<br />
+8. <strong>Itemized Billing Engine</strong>: Consolidated invoices supporting Indian currency (<code>₹</code> INR), UPI payments (GPay/PhonePe/Paytm), and cashless insurance schemes (Ayushman Bharat PM-JAY / TPA Mediclaim).<br />
+9. <strong>Clinical AI Intelligence Suite</strong>: NLP triage scoring (1-10 acuity), 30-day post-discharge readmission probability scoring, and 7-day cyclical bed influx forecasting.</p>
+<p>Automated verification tests confirm a <strong>100% test pass rate</strong>, validating the system's operational readiness, data consistency, and performance.</p>
+<hr />
+<h2>CHAPTER 1: INTRODUCTION &amp; COMPANY PROFILE</h2>
+<h3>1.1 About YP Edutech</h3>
+<p><strong>YP Edutech</strong> is a premier technology training and software education organization committed to bridging the gap between academic theory and industry requirements. YP Edutech offers specialized training programs in:<br />
+- Full-Stack Web Development &amp; Modern API Frameworks<br />
+- Python Programming &amp; Data Engineering<br />
+- Machine Learning, Artificial Intelligence &amp; Data Science<br />
+- Cloud Architecture, DevOps &amp; Database Administration</p>
+<p>The training methodology at YP Edutech emphasizes real-world, industry-standard project development, clean code principles, version control workflows (Git/GitHub), architectural design patterns, and agile testing methodologies.</p>
+<h3>1.2 Training Objectives &amp; Technical Curriculum Breakdown</h3>
+<p>The summer industrial training at <strong>YP Edutech</strong> followed an intensive, hands-on curriculum structured to bridge the gap between academic theory and enterprise production engineering. The training was anchored around two primary technical pillars: <strong>Full-Stack Python Software Development (including extensive library mastery)</strong> and <strong>Comprehensive Relational Database Engineering &amp; Management</strong>.</p>
+<h4>1.2.1 Module 1: Comprehensive Python Programming Mastery</h4>
+<p>The candidate underwent end-to-end training across the complete Python ecosystem:</p>
+<ol>
+<li><strong>Core Language Fundamentals &amp; Advanced Syntax</strong>:</li>
+<li>Primitive data types (<code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>) and collection data structures (<code>list</code>, <code>tuple</code>, <code>dict</code>, <code>set</code>).</li>
+<li>Deep dive into collection mutability, memory references, shallow vs. deep copies (<code>copy</code> module).</li>
+<li>Advanced control flow, conditional expressions, and looping patterns (<code>enumerate</code>, <code>zip</code>, <code>reversed</code>).</li>
+<li>List comprehensions, dictionary comprehensions, set comprehensions, and generator expressions for memory-efficient lazy evaluation.</li>
+<li>First-class and higher-order functions: <code>lambda</code>, <code>map</code>, <code>filter</code>, <code>functools.reduce</code>, function closures, and custom decorators (<code>@functools.wraps</code>).</li>
+<li>Robust exception handling hierarchies: <code>try</code>, <code>except</code>, <code>else</code>, <code>finally</code>, raising custom exception classes, and defensive input assertion.</li>
+<li>
+<p>File I/O workflows, text and binary streams, and context management protocols (<code>with</code> statement, <code>__enter__</code>, <code>__exit__</code>).</p>
+</li>
+<li>
+<p><strong>Object-Oriented Programming (OOP) Paradigm</strong>:</p>
+</li>
+<li>Class definitions, object instantiation, state encapsulation, and data hiding using private/protected naming conventions (<code>_protected</code>, <code>__private</code>).</li>
+<li>Inheritance architectures: single, multiple, hierarchical, and method resolution order (<code>MRO</code> / <code>super()</code>).</li>
+<li>Polymorphism and dynamic method dispatch; abstract base classes (<code>abc.ABC</code>, <code>@abstractmethod</code>).</li>
+<li>Dunder (Magic) methods implementation: <code>__init__</code>, <code>__str__</code>, <code>__repr__</code>, <code>__len__</code>, <code>__getitem__</code>, <code>__iter__</code>, <code>__call__</code>, <code>__eq__</code>.</li>
+<li>Method decorators: <code>@property</code>, <code>@&lt;field&gt;.setter</code>, <code>@classmethod</code>, <code>@staticmethod</code>.</li>
+<li>
+<p>Design patterns in Python: Singleton pattern (for database connection pooling), Factory pattern (for patient record factories), and Strategy pattern (for billing calculations).</p>
+</li>
+<li>
+<p><strong>In-Depth Python Standard Library Mastery</strong>:</p>
+</li>
+<li><code>sqlite3</code>: Native relational database engine interface, connection lifecycle management, <code>cursor</code> execution, transaction commit/rollback, row factory (<code>sqlite3.Row</code>), and executing PRAGMA commands.</li>
+<li><code>json</code>: Parsing (<code>json.loads</code>), formatting/serializing (<code>json.dumps</code>), custom encoders, handling nested dictionary structures, and embedding JSON payloads inside relational columns.</li>
+<li><code>datetime</code> &amp; <code>time</code>: Date arithmetic (<code>timedelta</code>), timezone awareness, formatting/parsing (<code>strftime</code>, <code>strptime</code>), ISO 8601 string formatting, and clinical timestamps.</li>
+<li><code>math</code> &amp; <code>random</code>: Clinical formulas, rounding functions, pseudorandom distributions for simulated inpatient bed occupancy, and odds-ratio risk modeling.</li>
+<li><code>os</code>, <code>sys</code> &amp; <code>pathlib</code>: Cross-platform filesystem navigation, directory traversal, absolute path resolution, and system exit hooks.</li>
+<li><code>typing</code>: Static typing annotations (<code>Optional</code>, <code>Union</code>, <code>List</code>, <code>Dict</code>, <code>Tuple</code>, <code>Callable</code>, <code>Any</code>), type hints, and self-documenting code bases.</li>
+<li><code>re</code>: Regular expressions for pattern matching, data extraction, and input validation (e.g., Indian 10-digit mobile numbers, ABHA health identifiers).</li>
+<li>
+<p><code>hashlib</code>: Cryptographic hashing algorithms (SHA-256) for secure token generation and sensitive data integrity.</p>
+</li>
+<li>
+<p><strong>Modern Third-Party Python Frameworks &amp; Libraries</strong>:</p>
+</li>
+<li><strong>FastAPI</strong>: Modern, high-performance web framework for building REST APIs with Python 3.10+ types, dependency injection systems, asynchronous route handlers (<code>async def</code>), OpenAPI / Swagger automatic documentation, and path/query parameter handling.</li>
+<li><strong>Pydantic (v2)</strong>: Advanced data parsing, strict runtime validation, BaseModel class definitions, Field constraints, custom model validators, and error reporting.</li>
+<li><strong>Uvicorn</strong>: Asynchronous Server Gateway Interface (ASGI) high-concurrency web server handling non-blocking I/O event loops.</li>
+<li><strong>Jinja2</strong>: Server-side templating engine, template inheritance (<code>base.html</code>), macro generation, conditional rendering, loops, and contextual filters for clinical UI components.</li>
+<li><strong>Starlette</strong>: Low-level ASGI toolkit, StaticFiles mounting, request/response lifecycle, and custom HTTP exception handlers.</li>
+<li><strong>HTTPX &amp; Requests</strong>: Synchronous and asynchronous HTTP clients for building automated test suites and simulating concurrent API requests.</li>
+</ol>
+<hr />
+<h4>1.2.2 Module 2: Comprehensive Relational Database Engineering &amp; Management</h4>
+<p>A major focus of the YP Edutech summer training was end-to-end database engineering, ensuring students master the art of designing, querying, and administering relational databases:</p>
+<ol>
+<li><strong>Relational Database Management Systems (RDBMS) Fundamentals</strong>:</li>
+<li>Relational data model principles, entity-relationship (ER) theory, cardinality, and constraints.</li>
+<li>Primary Keys (PK), Foreign Keys (FK), Surrogate Keys (e.g., <code>patient_uid</code>), Unique Keys (UK), and Check Constraints.</li>
+<li>
+<p>Referential integrity rules: cascading updates, cascading deletes (<code>ON DELETE CASCADE</code>), and foreign key enforcement (<code>PRAGMA foreign_keys = ON</code>).</p>
+</li>
+<li>
+<p><strong>Database Normalization</strong>:</p>
+</li>
+<li>Systematic relational decomposition from Unnormalized Form (UNF) through First Normal Form (1NF), Second Normal Form (2NF), and Third Normal Form (3NF).</li>
+<li>Eliminating partial dependencies, transitive dependencies, multi-valued attributes, and redundancy.</li>
+<li>
+<p>Practical application: normalising the hospital schema into 7 distinct entity tables (<code>patients</code>, <code>doctors</code>, <code>beds</code>, <code>appointments</code>, <code>prescriptions</code>, <code>medicines</code>, <code>bills</code>), ensuring zero data anomalies during updates and deletions.</p>
+</li>
+<li>
+<p><strong>Advanced Structured Query Language (SQL) Mastery</strong>:</p>
+</li>
+<li><strong>Data Definition Language (DDL)</strong>: <code>CREATE TABLE</code>, <code>ALTER TABLE</code>, <code>DROP TABLE</code>, column data types (<code>INTEGER</code>, <code>TEXT</code>, <code>REAL</code>, <code>BLOB</code>), constraints (<code>PRIMARY KEY AUTOINCREMENT</code>, <code>NOT NULL</code>, <code>DEFAULT</code>, <code>CHECK</code>).</li>
+<li><strong>Data Manipulation Language (DML)</strong>: Complex <code>INSERT INTO</code>, bulk inserts, conditional <code>UPDATE</code> statements, and parameterized <code>DELETE</code> operations.</li>
+<li>
+<p><strong>Data Query Language (DQL)</strong>:</p>
+<ul>
+<li>Multi-table <code>JOIN</code> operations: <code>INNER JOIN</code>, <code>LEFT OUTER JOIN</code>, self-joins, and subqueries.</li>
+<li>Grouping &amp; Aggregations: <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>, accompanied by <code>GROUP BY</code> and <code>HAVING</code> filters (e.g., calculating total revenue collected per payment channel, bed occupancy percentages per ward).</li>
+<li>Conditional query expressions (<code>CASE WHEN ... THEN ... ELSE ... END</code>).</li>
+<li>Sorting and pagination: <code>ORDER BY</code>, <code>LIMIT</code>, and <code>OFFSET</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Transaction Management &amp; ACID Principles</strong>:</p>
+</li>
+<li>Deep understanding of ACID properties: <strong>Atomicity</strong> (all-or-nothing operations), <strong>Consistency</strong> (state valid before and after), <strong>Isolation</strong> (concurrent transaction safety), and <strong>Durability</strong> (committed data persistence).</li>
+<li>
+<p>Practical transaction handling: atomic hospital billing and pharmacy dispensing (deducting medicine stock in <code>medicines</code> and creating invoice line items in <code>bills</code> within an atomic commit, rolling back on any failure).</p>
+</li>
+<li>
+<p><strong>Security, Performance &amp; Embedded Optimization</strong>:</p>
+</li>
+<li><strong>SQL Injection Defense</strong>: Strict avoidance of raw string formatting (<code>f"SELECT ..."</code>), enforcing 100% parameterized query execution (<code>cursor.execute(sql, (val1, val2))</code>).</li>
+<li><strong>SQLite3 Internal Architecture</strong>: Embedded single-file storage, WAL (Write-Ahead Logging) mode, zero-daemon deployment, and <code>sqlite3.Row</code> factory configuration enabling named column access.</li>
+<li><strong>Hybrid Relational-Document Architecture</strong>: Leveraging text columns to store structured JSON payloads (such as multi-drug prescription schedules and diagnostic lab test batteries) to maintain strict 3NF relational integrity while avoiding table bloat for dynamic clinical sub-items.</li>
+</ol>
+<h3>1.3 Project Background &amp; Clinical Motivation</h3>
+<p>In a bustling healthcare facility, minutes matter. The COVID-19 pandemic and post-pandemic surges highlighted severe deficiencies in hospital coordination:<br />
+- Outpatients wait for hours in OPDs without real-time token visibility.<br />
+- Critical beds (especially ICU and Emergency bays) are bottlenecked due to manual paper records.<br />
+- Handwritten prescriptions result in dispensing errors.<br />
+- Uncoordinated billing leads to insurance pre-authorization delays.</p>
+<p>The <strong>Sanjeevani Smart Hospital Management System</strong> was conceived as an end-to-end digital hospital operating system tailored specifically to the operational realities of Indian hospitals.</p>
+<h3>1.4 Problem Statement</h3>
+<p>Traditional hospital management setups suffer from:<br />
+1. <strong>Siloed Record Keeping</strong>: OPD cards, patient histories, and pharmacy bills exist as isolated paper fragments.<br />
+2. <strong>Absence of Intelligent Triage</strong>: Receptionists without clinical backgrounds struggle to assign incoming emergency patients to appropriate specialists.<br />
+3. <strong>Bed Allocation Latency</strong>: Nurses must physically call wards to check for unoccupied ICU or General beds.<br />
+4. <strong>Foreign Currency &amp; Incompatible Workflows</strong>: Many commercial off-the-shelf software packages are built for Western insurance billing (USD/EUR) and do not support Indian payment modes like UPI, Ayushman Bharat PM-JAY, or local generic drug trade names.</p>
+<h3>1.5 Objectives &amp; Scope</h3>
+<p>The key objectives of the project are:<br />
+- Build a unified web application serving hospital administrators, doctors, nurses, pharmacists, and billing personnel.<br />
+- Ensure ultra-fast load times (&lt; 50ms) using FastAPI.<br />
+- Deliver localized Indian features: <code>₹</code> currency, UPI and PM-JAY options, Indian mobile formats (<code>+91</code>), and 24 Indian doctors spanning all major departments.<br />
+- Integrate Clinical AI algorithms to automate triage routing, predict 30-day post-discharge readmission risks, and forecast bed occupancy demands.</p>
+<hr />
+<h2>CHAPTER 2: LITERATURE SURVEY &amp; FEASIBILITY ANALYSIS</h2>
+<h3>2.1 Existing Systems vs. Sanjeevani HMS</h3>
+<table>
+<thead>
+<tr>
+<th>Feature / Metric</th>
+<th>Paper-Based Systems</th>
+<th>Legacy ERPs (Java/PHP)</th>
+<th>Sanjeevani Smart HMS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Response Latency</strong></td>
+<td>Manual (Hours)</td>
+<td>Moderate (200ms - 1s)</td>
+<td><strong>Ultra-Low (&lt; 40ms)</strong></td>
+</tr>
+<tr>
+<td><strong>OPD Queue Tracking</strong></td>
+<td>Physical slips / shouting</td>
+<td>Basic text list</td>
+<td><strong>Live Real-time Token Caller</strong></td>
+</tr>
+<tr>
+<td><strong>Bed Allocation</strong></td>
+<td>Telephone calls / registers</td>
+<td>Tabular database view</td>
+<td><strong>Color-Coded Visual Bed Matrix</strong></td>
+</tr>
+<tr>
+<td><strong>Prescription System</strong></td>
+<td>Handwritten paper</td>
+<td>Clunky popups</td>
+<td><strong>Clean Rx Pad with ICD-10 Tagging</strong></td>
+</tr>
+<tr>
+<td><strong>Pharmacy POS</strong></td>
+<td>Independent software</td>
+<td>Separate inventory module</td>
+<td><strong>Integrated POS with Instant Stock Deduct</strong></td>
+</tr>
+<tr>
+<td><strong>Payment Modes</strong></td>
+<td>Cash only</td>
+<td>Card / Cash</td>
+<td><strong>UPI (QR/GPay), Cash, Cards, PM-JAY</strong></td>
+</tr>
+<tr>
+<td><strong>AI Intelligence</strong></td>
+<td>None</td>
+<td>Rare / Expensive add-on</td>
+<td><strong>Built-in Triage NLP &amp; Readmission Scorer</strong></td>
+</tr>
+<tr>
+<td><strong>Deployment Footprint</strong></td>
+<td>Physical rooms</td>
+<td>Heavy server stack (Tomcat/IIS)</td>
+<td><strong>Lightweight Single-Process ASGI</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 Feasibility Study</h3>
+<h4>A. Technical Feasibility</h4>
+<p>The platform runs on <strong>Python 3.13</strong> and <strong>FastAPI</strong>, backed by <strong>SQLite3</strong> and <strong>Chart.js</strong>. The entire server package is cross-platform, requires no external database daemons (zero configuration overhead), and runs on standard commodity hardware. Technical feasibility is rated <strong>100%</strong>.</p>
+<h4>B. Economic Feasibility</h4>
+<p>By utilizing open-source frameworks (FastAPI, Jinja2, Chart.js, FontAwesome) and an embedded ACID-compliant SQLite3 database, the software incurs <strong>₹0 software licensing fees</strong>. It eliminates expensive proprietary database licenses (such as Oracle or Microsoft SQL Server) while delivering enterprise-level performance.</p>
+<h4>C. Operational Feasibility</h4>
+<p>The interface was crafted using a clean Clinical Design System inspired by modern hospital monitors (Inter font, intuitive status badges, clear primary actions). Medical staff require minimal training to operate the token queue, admit patients, or generate itemized discharge invoices.</p>
+<h3>2.3 Technology Stack Rationale</h3>
+<div class="codehilite"><pre><span></span><code><span class="nf">graph</span><span class="w"> </span><span class="n">LR</span>
+<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">Frontend</span><span class="p">[</span><span class="s">&quot;Front-End Layer&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="n">HTML5</span><span class="p">[</span><span class="s">&quot;HTML5 &amp; Jinja2 Templates&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="n">CSS3</span><span class="p">[</span><span class="s">&quot;Custom Clinical CSS3&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="n">JS</span><span class="p">[</span><span class="s">&quot;Vanilla ES6+ JS &amp; Chart.js&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="kd">end</span>
+<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">Backend</span><span class="p">[</span><span class="s">&quot;Application Layer&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="n">FastAPI</span><span class="p">[</span><span class="s">&quot;FastAPI 0.110+ (Python 3.13)&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="n">Uvicorn</span><span class="p">[</span><span class="s">&quot;Uvicorn ASGI Server&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="n">AI</span><span class="p">[</span><span class="s">&quot;AI Engine (NLP &amp; ML Rules)&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="kd">end</span>
+<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">Storage</span><span class="p">[</span><span class="s">&quot;Data Layer&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="n">SQLite</span><span class="p">[</span><span class="s">&quot;SQLite3 (Row Factory, Foreign Keys)&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="kd">end</span>
+<span class="w">    </span><span class="n">Frontend</span><span class="w"> </span><span class="o">&lt;--&gt;|</span><span class="n">HTTP</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">JSON</span><span class="w"> </span><span class="n">REST</span><span class="o">|</span><span class="w"> </span><span class="n">Backend</span>
+<span class="w">    </span><span class="n">Backend</span><span class="w"> </span><span class="o">&lt;--&gt;|</span><span class="kr">SQL</span><span class="w"> </span><span class="n">Queries</span><span class="o">|</span><span class="w"> </span><span class="n">Storage</span>
+</code></pre></div>
+
+<ol>
+<li><strong>FastAPI</strong>: One of the fastest Python frameworks available, rivaling NodeJS and Go. Native support for asynchronous requests, automatic OpenAPI/Swagger documentation, and Pydantic validation.</li>
+<li><strong>SQLite3</strong>: ACID-compliant, serverless, and embedded. With <code>PRAGMA foreign_keys = ON</code> and <code>row_factory = sqlite3.Row</code>, it offers relational consistency with dictionary-like row querying.</li>
+<li><strong>Jinja2</strong>: Enables server-side rendering for blazing fast page loads without the complex bundle overhead of Single Page Application (SPA) frameworks like React or Angular.</li>
+<li><strong>Chart.js</strong>: Client-side hardware-accelerated canvas rendering for real-time bed analytics and patient flow visualizations.</li>
+</ol>
+<hr />
+<h2>CHAPTER 3: SOFTWARE REQUIREMENTS SPECIFICATION (SRS)</h2>
+<h3>3.1 User Characteristics &amp; Roles</h3>
+<p>The application incorporates a <strong>Role-Based Simulation Switcher</strong>:<br />
+1. <strong>Chief Medical Admin</strong>: Global access to financial metrics, doctor directory, and clinical activity audit trail.<br />
+2. <strong>Attending Doctor</strong>: Access to OPD queue caller, consultation pad, and digital prescription generator.<br />
+3. <strong>Head Triage Nurse</strong>: Patient registration, vital signs logging, and bed admission/transfer management.<br />
+4. <strong>Clinical Pharmacist</strong>: Pharmacy inventory monitoring, low-stock alerts, batch expiry checks, and POS dispensing.<br />
+5. <strong>Billing Specialist</strong>: Itemized invoice creation, insurance deductions, copay calculations, and UPI receipt settlement.</p>
+<h3>3.2 Functional Requirements</h3>
+<h4>Module 1: Executive Clinical Dashboard</h4>
+<ul>
+<li>Display real-time KPI telemetry: Total Patients, Active Inpatients, Bed Occupancy %, ICU Occupancy alert, Today's OPD Waiting Queue, and Settled Hospital Revenue.</li>
+<li>Render dynamic Chart.js visualizations for Bed Occupancy Breakdown (Doughnut) and Departmental Patient Distribution (Bar Chart).</li>
+<li>Live real-time audit feed logging every clinical transaction.</li>
+</ul>
+<h4>Module 2: Patients &amp; Electronic Health Records (EHR)</h4>
+<ul>
+<li>Patient Registration with automatic UID generation (<code>PAT-1001</code>, <code>PAT-1002</code>, etc.).</li>
+<li>Tracking demographic parameters: Age, Gender, Blood Group, Phone (<code>+91</code>), Address, Emergency Contact details.</li>
+<li>Recording clinical risk markers: Drug Allergies, Chronic Pre-existing Conditions.</li>
+<li>State-machine status handling: <code>Outpatient</code> $\rightarrow$ <code>Admitted</code> $\rightarrow$ <code>Discharged</code> / <code>Emergency</code>.</li>
+</ul>
+<h4>Module 3: OPD Queue &amp; Token Caller</h4>
+<ul>
+<li>Prevent booking conflicts by computing daily sequential token numbers per doctor.</li>
+<li>Status progression: <code>Scheduled</code> $\rightarrow$ <code>Waiting</code> $\rightarrow$ <code>In-Consultation</code> $\rightarrow$ <code>Completed</code> (or <code>Cancelled</code>).</li>
+<li>Direct action link to open consultation pad with pre-selected patient and doctor IDs.</li>
+</ul>
+<h4>Module 4: Specialist Physician Directory</h4>
+<ul>
+<li>Complete registry of 24 Indian doctors across 17 clinical specialties.</li>
+<li>Shift schedules, room assignments, consultation fees, qualifications, and patient satisfaction ratings.</li>
+<li>Instant departmental filtering pills.</li>
+</ul>
+<h4>Module 5: Visual Ward &amp; Bed Matrix</h4>
+<ul>
+<li>24 beds categorized into 6 wards: ICU, Emergency Bay, General Ward A (Male), General Ward B (Female), Maternity Ward, VIP Suite.</li>
+<li>Visual status cards: Green (<code>Available</code>), Blue (<code>Occupied</code>), Red (<code>ICU Occupied</code>), Amber (<code>Cleaning / Maintenance</code>).</li>
+<li>One-click modals for outpatient admission, bed assignment, and patient discharge.</li>
+</ul>
+<h4>Module 6: Digital Prescriptions &amp; Clinical Consultation Pad</h4>
+<ul>
+<li>Clinical diagnosis entry with ICD-10 code tagging.</li>
+<li>Multi-medication structured prescription: Drug Name, Dosage, Frequency (OD/BID/TID), Duration, and Food Instructions.</li>
+<li>Diagnostic lab test ordering with urgency flags.</li>
+<li>Printable official hospital letterhead with official Rx emblem and doctor endorsement.</li>
+</ul>
+<h4>Module 7: Pharmacy Inventory &amp; Dispensary POS</h4>
+<ul>
+<li>Real-time stock counting with low-stock threshold triggers ($\le 20$ or $50$ units).</li>
+<li>Batch ID tracking, manufacturer tracking, and expiry date monitoring.</li>
+<li>Direct Point-of-Sale (POS) dispensing deducting quantity from live inventory.</li>
+</ul>
+<h4>Module 8: Consolidated Billing &amp; Financial Settlement</h4>
+<ul>
+<li>Automatic aggregation of Physician Fees, Room/Bed Tariffs, Pharmacy charges, and Lab test fees.</li>
+<li>5% healthcare tax calculation and insurance coverage deduction.</li>
+<li>Settlement via Indian payment methods: <strong>UPI (Google Pay, PhonePe, Paytm)</strong>, <strong>Cash</strong>, <strong>Net Banking</strong>, <strong>Debit/Credit Card</strong>, <strong>Ayushman Bharat (AB-PMJAY)</strong>, and <strong>TPA Mediclaim</strong>.</li>
+</ul>
+<h4>Module 9: Clinical AI Intelligence Suite</h4>
+<ul>
+<li><strong>AI Symptom Triage</strong>: NLP keyword parsing across 9 specialties with vitals abnormality alerts ($SpO_2 &lt; 92\%$, tachycardia, high fever).</li>
+<li><strong>30-Day Readmission Risk Scorer</strong>: Algorithmic probability calculation based on age, chronic conditions, ICU stay, and prior visits.</li>
+<li><strong>7-Day Bed Occupancy Forecaster</strong>: Predictive time-series modeling weekly bed surges.</li>
+</ul>
+<h3>3.3 Non-Functional Requirements</h3>
+<ul>
+<li><strong>Performance</strong>: Response times for all API endpoints under 50 milliseconds.</li>
+<li><strong>Reliability &amp; ACID Compliance</strong>: SQLite foreign key constraints enforce zero orphaned appointments or prescriptions (<code>ON DELETE CASCADE</code> / <code>SET NULL</code>).</li>
+<li><strong>Usability</strong>: Responsive layout accessible on desktop monitors, tablets, and mobile devices.</li>
+<li><strong>Data Integrity</strong>: Parameterized SQL queries preventing SQL injection vulnerabilities.</li>
+</ul>
+<h3>3.4 Hardware &amp; Software Requirements</h3>
+<ul>
+<li><strong>Hardware</strong>: Standard x86/ARM Processor (Intel Core i3/i5 or AMD equivalent), 4 GB RAM, 500 MB free disk space.</li>
+<li><strong>Software</strong>: Windows 10/11, Linux, or macOS; Python 3.10+ (tested on Python 3.13); Modern Web Browser (Google Chrome, Microsoft Edge, Firefox, Safari).</li>
+</ul>
+<hr />
+<h2>CHAPTER 4: SYSTEM ARCHITECTURE &amp; DESIGN</h2>
+<h3>4.1 High-Level Architecture</h3>
+<div class="codehilite"><pre><span></span><code><span class="nf">graph</span><span class="w"> </span><span class="n">TD</span>
+<span class="w">    </span><span class="n">User</span><span class="p">([</span><span class="n">Doctor</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Nurse</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Admin</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Pharmacist</span><span class="p">])</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Navigates</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Submits</span><span class="o">|</span><span class="w"> </span><span class="n">Browser</span><span class="p">[</span><span class="s">&quot;Web Browser Client&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="n">Browser</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">HTTP</span><span class="w"> </span><span class="n">GET</span><span class="o">/</span><span class="n">POST</span><span class="w"> </span><span class="p">(</span><span class="n">Forms</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">JSON</span><span class="p">)</span><span class="o">|</span><span class="w"> </span><span class="n">Uvicorn</span><span class="p">[</span><span class="s">&quot;Uvicorn ASGI Web Server&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="n">Uvicorn</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">FastAPI</span><span class="p">[</span><span class="s">&quot;FastAPI Application (app.py)&quot;</span><span class="p">]</span>
+
+<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">CoreEngine</span><span class="p">[</span><span class="s">&quot;FastAPI Core Engine&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="n">Router</span><span class="p">[</span><span class="s">&quot;Page &amp; API Router&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="n">JinjaRenderer</span><span class="p">[</span><span class="s">&quot;Jinja2 Template Engine&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="n">AIEngine</span><span class="p">[</span><span class="s">&quot;Clinical AI Engine (ai_engine.py)&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="kd">end</span>
+
+<span class="w">    </span><span class="n">FastAPI</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">Router</span>
+<span class="w">    </span><span class="n">Router</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Renders</span><span class="w"> </span><span class="n">UI</span><span class="o">|</span><span class="w"> </span><span class="n">JinjaRenderer</span>
+<span class="w">    </span><span class="n">Router</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Evaluates</span><span class="w"> </span><span class="n">Clinical</span><span class="w"> </span><span class="n">Data</span><span class="o">|</span><span class="w"> </span><span class="n">AIEngine</span>
+<span class="w">    </span><span class="n">Router</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">CRUD</span><span class="w"> </span><span class="n">Operations</span><span class="o">|</span><span class="w"> </span><span class="n">DBQueries</span><span class="p">[</span><span class="s">&quot;Database Helpers (database.py)&quot;</span><span class="p">]</span>
+
+<span class="w">    </span><span class="n">DBQueries</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">PRAGMA</span><span class="w"> </span><span class="n">foreign_keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ON</span><span class="o">|</span><span class="w"> </span><span class="n">SQLite</span><span class="p">[(</span><span class="s">&quot;hospital.db (SQLite3)&quot;</span><span class="p">)]</span>
+<span class="w">    </span><span class="n">JinjaRenderer</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">HTML</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">CSS</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">JS</span><span class="o">|</span><span class="w"> </span><span class="n">Browser</span>
+</code></pre></div>
+
+<h3>4.2 Data Flow Diagram (DFD Level 1)</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">graph</span><span class="w"> </span><span class="n">TD</span>
+<span class="w">    </span><span class="n">Patient</span><span class="p">([</span><span class="n">Patient</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Receptionist</span><span class="p">])</span><span class="w"> </span><span class="o">--&gt;|</span><span class="mf">1.</span><span class="w"> </span><span class="n">Register</span><span class="w"> </span><span class="n">Demographics</span><span class="o">|</span><span class="w"> </span><span class="n">P1</span><span class="p">[</span><span class="n">Patient</span><span class="w"> </span><span class="n">Management</span><span class="p">]</span>
+<span class="w">    </span><span class="n">P1</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Stores</span><span class="w"> </span><span class="n">Patient</span><span class="w"> </span><span class="n">Record</span><span class="o">|</span><span class="w"> </span><span class="n">DB</span><span class="p">[(</span><span class="n">SQLite</span><span class="w"> </span><span class="n">Database</span><span class="p">)]</span>
+
+<span class="w">    </span><span class="n">Patient</span><span class="w"> </span><span class="o">--&gt;|</span><span class="mf">2.</span><span class="w"> </span><span class="n">Request</span><span class="w"> </span><span class="n">Consultation</span><span class="o">|</span><span class="w"> </span><span class="n">P2</span><span class="p">[</span><span class="n">Appointment</span><span class="w"> </span><span class="n">Scheduler</span><span class="p">]</span>
+<span class="w">    </span><span class="n">P2</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Computes</span><span class="w"> </span><span class="n">Token</span><span class="w"> </span><span class="err">#</span><span class="o">|</span><span class="w"> </span><span class="n">DB</span>
+
+<span class="w">    </span><span class="n">Doctor</span><span class="p">([</span><span class="n">Attending</span><span class="w"> </span><span class="n">Physician</span><span class="p">])</span><span class="w"> </span><span class="o">--&gt;|</span><span class="mf">3.</span><span class="w"> </span><span class="n">Call</span><span class="w"> </span><span class="n">Next</span><span class="w"> </span><span class="n">Token</span><span class="o">|</span><span class="w"> </span><span class="n">P2</span>
+<span class="w">    </span><span class="n">Doctor</span><span class="w"> </span><span class="o">--&gt;|</span><span class="mf">4.</span><span class="w"> </span><span class="n">Enter</span><span class="w"> </span><span class="n">Diagnosis</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Meds</span><span class="o">|</span><span class="w"> </span><span class="n">P3</span><span class="p">[</span><span class="n">Prescription</span><span class="w"> </span><span class="n">Engine</span><span class="p">]</span>
+<span class="w">    </span><span class="n">P3</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Saves</span><span class="w"> </span><span class="n">Rx</span><span class="w"> </span><span class="n">Record</span><span class="o">|</span><span class="w"> </span><span class="n">DB</span>
+
+<span class="w">    </span><span class="n">Pharmacist</span><span class="p">([</span><span class="n">Pharmacist</span><span class="p">])</span><span class="w"> </span><span class="o">--&gt;|</span><span class="mf">5.</span><span class="w"> </span><span class="n">Dispense</span><span class="w"> </span><span class="n">Prescribed</span><span class="w"> </span><span class="n">Meds</span><span class="o">|</span><span class="w"> </span><span class="n">P4</span><span class="p">[</span><span class="n">Pharmacy</span><span class="w"> </span><span class="n">POS</span><span class="p">]</span>
+<span class="w">    </span><span class="n">P4</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Deducts</span><span class="w"> </span><span class="n">Medicine</span><span class="w"> </span><span class="n">Stock</span><span class="o">|</span><span class="w"> </span><span class="n">DB</span>
+
+<span class="w">    </span><span class="n">BillingClerk</span><span class="p">([</span><span class="n">Billing</span><span class="w"> </span><span class="n">Clerk</span><span class="p">])</span><span class="w"> </span><span class="o">--&gt;|</span><span class="mf">6.</span><span class="w"> </span><span class="n">Consolidate</span><span class="w"> </span><span class="n">Fees</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Claims</span><span class="o">|</span><span class="w"> </span><span class="n">P5</span><span class="p">[</span><span class="n">Billing</span><span class="w"> </span><span class="n">Engine</span><span class="p">]</span>
+<span class="w">    </span><span class="n">P5</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Generates</span><span class="w"> </span><span class="n">Invoice</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Settles</span><span class="w"> </span><span class="n">via</span><span class="w"> </span><span class="n">UPI</span><span class="o">|</span><span class="w"> </span><span class="n">DB</span>
+
+<span class="w">    </span><span class="n">Nurse</span><span class="p">([</span><span class="n">Triage</span><span class="w"> </span><span class="n">Nurse</span><span class="p">])</span><span class="w"> </span><span class="o">--&gt;|</span><span class="mf">7.</span><span class="w"> </span><span class="n">Submit</span><span class="w"> </span><span class="n">Symptoms</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Vitals</span><span class="o">|</span><span class="w"> </span><span class="n">P6</span><span class="p">[</span><span class="n">AI</span><span class="w"> </span><span class="n">Triage</span><span class="w"> </span><span class="n">Analyzer</span><span class="p">]</span>
+<span class="w">    </span><span class="n">P6</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Returns</span><span class="w"> </span><span class="n">Urgency</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Referral</span><span class="o">|</span><span class="w"> </span><span class="n">Nurse</span>
+</code></pre></div>
+
+<h3>4.3 Entity-Relationship (ER) Diagram</h3>
+<div class="codehilite"><pre><span></span><code>erDiagram
+    PATIENTS ||--o{ APPOINTMENTS : &quot;books&quot;
+    PATIENTS ||--o{ PRESCRIPTIONS : &quot;receives&quot;
+    PATIENTS ||--o{ BILLS : &quot;billed for&quot;
+    PATIENTS ||--o| BEDS : &quot;allocated&quot;
+    DOCTORS ||--o{ APPOINTMENTS : &quot;attends&quot;
+    DOCTORS ||--o{ PRESCRIPTIONS : &quot;authors&quot;
+    APPOINTMENTS ||--o| PRESCRIPTIONS : &quot;generates&quot;
+
+    PATIENTS {
+        int id PK
+        string patient_uid UK
+        string name
+        int age
+        string gender
+        string blood_group
+        string phone
+        string allergies
+        string chronic_conditions
+        string admission_status
+        int bed_id FK
+    }
+
+    DOCTORS {
+        int id PK
+        string doctor_uid UK
+        string name
+        string department
+        string specialization
+        string room_number
+        string shift
+        float consultation_fee
+        string status
+        float rating
+    }
+
+    BEDS {
+        int id PK
+        string bed_number UK
+        string ward
+        string floor
+        float daily_rate
+        string status
+        int patient_id FK
+    }
+
+    APPOINTMENTS {
+        int id PK
+        string appointment_uid UK
+        int patient_id FK
+        int doctor_id FK
+        string appointment_date
+        string time_slot
+        int token_number
+        string status
+        string vitals
+    }
+
+    PRESCRIPTIONS {
+        int id PK
+        string prescription_uid UK
+        int patient_id FK
+        int doctor_id FK
+        int appointment_id FK
+        string diagnosis
+        string icd_code
+        string medicines
+        string lab_tests
+        string doctor_notes
+    }
+
+    MEDICINES {
+        int id PK
+        string name
+        string generic_name
+        string category
+        int stock
+        int min_threshold
+        float unit_price
+        string batch_number
+        string expiry_date
+    }
+
+    BILLS {
+        int id PK
+        string invoice_number UK
+        int patient_id FK
+        string date
+        string items
+        float subtotal
+        float insurance_covered
+        float total_amount
+        string payment_status
+        string payment_method
+    }
+</code></pre></div>
+
+<hr />
+<h2>CHAPTER 5: IMPLEMENTATION &amp; TECHNICAL DETAILS</h2>
+<h3>5.1 Asynchronous Backend Architecture &amp; Python Library Ecosystem</h3>
+<p>The backend application (<code>app.py</code>) leverages modern Python 3.13 asynchronous features (<code>async</code>/<code>await</code>) and an enterprise library pipeline:<br />
+- <strong>FastAPI</strong>: Manages routing, asynchronous dependency injection, request-response validation, and auto-generated interactive OpenAPI/Swagger documentation (<code>/docs</code>).<br />
+- <strong>Pydantic</strong>: Enforces strict schema validation for clinical payloads (e.g., patient registration, doctor triage inputs, and invoice generation), rejecting malformed inputs with clear HTTP 422 errors.<br />
+- <strong>Jinja2</strong>: Renders hospital dashboards and reports server-side (<code>Jinja2Templates</code>), using template inheritance with block overrides (<code>{% extends "base.html" %}</code>).<br />
+- <strong>Python Standard Library Integrations</strong>:<br />
+  - <code>sqlite3</code> for zero-overhead, ACID-compliant relational persistence.<br />
+  - <code>json</code> for serializing multi-element prescriptions and allergy lists into SQLite columns.<br />
+  - <code>datetime</code> and <code>time</code> for calculating consultation durations, bed occupancy days, and ISO-standard timestamps.<br />
+  - <code>typing</code> (<code>Optional</code>, <code>List</code>, <code>Dict</code>, <code>Union</code>) to maintain clean, self-documenting type contracts across all route handlers.</p>
+<p>A lifespan context manager ensures schema synchronization and data integrity upon server boot:</p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@asynccontextmanager</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">lifespan</span><span class="p">(</span><span class="n">app</span><span class="p">:</span> <span class="n">FastAPI</span><span class="p">):</span>
+    <span class="c1"># Initialize DB schema &amp; seed foundational clinical data</span>
+    <span class="n">init_db</span><span class="p">()</span>
+    <span class="n">seed_database</span><span class="p">()</span>
+    <span class="k">yield</span>
+</code></pre></div>
+
+<h3>5.2 Relational Database Engineering &amp; Schema Integrity</h3>
+<p>In <code>database.py</code>, SQLite relational connections are configured with foreign key enforcement and row factory encapsulation:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_db_connection</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Connection</span><span class="p">:</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">DB_PATH</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">row_factory</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Row</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;PRAGMA foreign_keys = ON&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">conn</span>
+</code></pre></div>
+
+<p>Key architectural database highlights include:<br />
+1. <strong>Referential Integrity &amp; Cascading</strong>: With <code>PRAGMA foreign_keys = ON</code>, deleting or updating parent records cascades seamlessly (e.g., patient discharges and linked appointments), preventing dangling records.<br />
+2. <strong>ACID Transaction Guarantees</strong>: Multi-step workflows (such as dispensing pharmacy drugs while concurrently creating an itemized bill) are wrapped inside atomic transactions, rolling back upon any exception.<br />
+3. <strong>Parameterized SQL Defense</strong>: Every database query uses explicit parameter binding (<code>?</code> placeholders) rather than string interpolation, providing ironclad immunity against SQL Injection attacks.<br />
+4. <strong>Row Factory Optimization</strong>: <code>sqlite3.Row</code> provides index and key-based column lookups, combining Python dictionary convenience with tuple performance.</p>
+<h3>5.3 Clinical AI Intelligence Suite</h3>
+<h4>5.3.1 Symptom Triage NLP Analyzer</h4>
+<p>The triage algorithm in <code>ai_engine.py</code> parses free-text symptoms against an extensive clinical knowledge dictionary spanning 9 departments. It computes department match frequencies and evaluates life-threatening red flags:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Hypoxemia Alert Evaluation</span>
+<span class="k">if</span> <span class="n">spo2</span> <span class="o">&lt;</span> <span class="mi">92</span><span class="p">:</span>
+    <span class="n">urgency_level</span> <span class="o">=</span> <span class="s2">&quot;Critical / Emergency&quot;</span>
+    <span class="n">triage_score</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">triage_score</span><span class="p">,</span> <span class="mf">8.8</span><span class="p">)</span>
+    <span class="n">alerts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hypoxemia Alert: SpO2 is </span><span class="si">{</span><span class="n">spo2</span><span class="si">}</span><span class="s2">% (Below 92%). Supplemental oxygen required.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>It returns:<br />
+- Triage Urgency Level (<code>Critical / Emergency</code>, <code>Urgent</code>, <code>Routine</code>)<br />
+- Clinical Acuity Score ($1.0$ to $10.0$)<br />
+- Primary &amp; Secondary Specialist Referral<br />
+- Recommended clinical action protocol</p>
+<h4>5.3.2 30-Day Hospital Readmission Risk Scorer</h4>
+<p>The readmission predictor estimates post-discharge readmission probability using an empirical multi-factor formula:<br />
+[ P(\text{Readmission}) = \text{Base} (12\%) + \Delta_{\text{Age}} + \sum \Delta_{\text{Comorbidities}} + \Delta_{\text{ICU}} + (\text{Prior Admissions} \times 8\%) ]<br />
+Scores are clamped between $5\%$ and $95\%$, categorizing patients into Low, Moderate, or High Risk, alongside actionable prevention protocols (such as mandatory 48-hour teleconsultations or home healthcare nurse follow-ups).</p>
+<h4>5.3.3 7-Day Inpatient Bed Occupancy Forecaster</h4>
+<p>Simulates cyclical day-of-week hospital surge factors (Monday-Wednesday elective admission surges vs. weekend discharges), projecting inpatient bed requirements across ICU, General Wards, and Emergency Bays.</p>
+<h3>5.4 Frontend Engineering</h3>
+<ul>
+<li><strong>CSS Design System (<code>styles.css</code>)</strong>: 852 lines of modular CSS incorporating custom clinical variables, accessible color contrasts, smooth modal transitions, and responsive grid layouts.</li>
+<li><strong>Client Reactivity (<code>app.js</code>)</strong>: Dynamic toast alerts (<code>showToast</code>), instant client-side table search (<code>filterTable</code>), modal lifecycle handlers, and asynchronous <code>fetch</code> calls to backend REST endpoints.</li>
+<li><strong>Visualizations (<code>charts.js</code>)</strong>: Chart.js doughnut and bar visualizers displaying real-time hospital statistics.</li>
+</ul>
+<h3>5.5 Indian Healthcare Localization</h3>
+<ul>
+<li><strong>Currency</strong>: Every monetary field is standardized to <strong>₹ (Indian Rupee / INR)</strong>.</li>
+<li><strong>Specialist Doctors</strong>: 24 Indian doctors spanning all departments with authentic qualifications (<code>MD, DM Cardiology</code>, <code>MS Ortho</code>, <code>MD Pediatrics</code>, etc.).</li>
+<li><strong>Payment Gateways</strong>: Direct support for <strong>UPI (Google Pay, PhonePe, Paytm)</strong>, <strong>Ayushman Bharat (AB-PMJAY)</strong>, and <strong>TPA Mediclaim (Star Health, Care, HDFC ERGO)</strong>.</li>
+<li><strong>Indian Pharmaceutical Stock</strong>: Branded generics such as <em>Dolo 650, Augmentin 625 Duo, Pan-D, Azithral 500, Asthalin Inhaler, Glycomet 500</em> manufactured by <em>Cipla, Sun Pharma, Micro Labs, and Dr. Reddy's</em>.</li>
+</ul>
+<hr />
+<h2>CHAPTER 6: VERIFICATION, TESTING &amp; QUALITY ASSURANCE</h2>
+<h3>6.1 Testing Methodologies</h3>
+<p>The software underwent multi-tier verification:<br />
+1. <strong>Route Availability Testing</strong>: Verifying all 9 HTML views return HTTP 200 OK with correct template content.<br />
+2. <strong>REST API Endpoint Testing</strong>: Validating JSON responses for patient creation, bed admission, AI triage, and readmission risk.<br />
+3. <strong>Database Integrity Testing</strong>: Checking table counts, unique constraints, and foreign key cascades.</p>
+<h3>6.2 Automated Test Suite (<code>test_system.py</code>)</h3>
+<p>Using FastAPI's <code>TestClient</code> (built on <code>httpx</code>), an automated verification suite was developed:</p>
+<div class="codehilite"><pre><span></span><code>Testing HTML page routes...
+  [OK] /                  -&gt; HTTP 200 OK
+  [OK] /patients          -&gt; HTTP 200 OK
+  [OK] /appointments      -&gt; HTTP 200 OK
+  [OK] /doctors           -&gt; HTTP 200 OK
+  [OK] /beds              -&gt; HTTP 200 OK
+  [OK] /prescriptions     -&gt; HTTP 200 OK
+  [OK] /pharmacy          -&gt; HTTP 200 OK
+  [OK] /billing           -&gt; HTTP 200 OK
+  [OK] /ai-tools          -&gt; HTTP 200 OK
+
+Testing REST API endpoints &amp; AI engine...
+  [OK] POST /api/patients -&gt; Created patient ID #1
+  [OK] POST /api/ai/triage -&gt; Urgency: Critical / Emergency | Dept: Cardiology
+  [OK] POST /api/ai/readmission -&gt; Risk: 95.0% (High Risk)
+  [OK] GET /api/ai/forecast-beds -&gt; 7-Day Forecast Generated successfully
+
+=======================================================
+ALL SYSTEM &amp; AI TESTS PASSED PERFECTLY (100% SUCCESS)
+=======================================================
+</code></pre></div>
+
+<hr />
+<h2>CHAPTER 7: RESULTS &amp; MODULE WALKTHROUGH</h2>
+<h3>7.1 Executive Dashboard (<code>/</code>)</h3>
+<ul>
+<li>Live summary counters for Total Patients, Bed Occupancy Rate, Today's OPD Waiting Queue, and Settled Hospital Revenue.</li>
+<li>Real-time token queue monitor displaying patient names, consulting doctors, and statuses.</li>
+<li>Interactive Chart.js doughnut chart breaking down ICU and General ward occupancy.</li>
+<li>Live clinical activity feed documenting patient registrations, prescriptions, and billing settlements.</li>
+</ul>
+<h3>7.2 Patient Registry &amp; EHR (<code>/patients</code>)</h3>
+<ul>
+<li>Instant search filter by Patient UID, Name, or Phone.</li>
+<li>Tabbed filters: <em>All, Admitted (Inpatients), Outpatients, Discharged</em>.</li>
+<li>Detailed medical profiles displaying blood groups, drug allergies (with danger warnings), and pre-existing chronic conditions.</li>
+<li>Quick admission/discharge and e-prescription issuance buttons.</li>
+</ul>
+<h3>7.3 OPD Queue &amp; Appointment Scheduler (<code>/appointments</code>)</h3>
+<ul>
+<li>Visual token caller badges (<code>#1</code>, <code>#2</code>, etc.) indicating patient consultation order.</li>
+<li>Time slot management (<code>09:00 - 09:30 AM</code>, etc.) preventing doctor schedule overlap.</li>
+<li>Vital signs telemetry preview (Blood Pressure, Pulse, SpO2, Temperature).</li>
+<li>Dynamic token status update buttons: <em>Call Next, Consult &amp; Rx, Completed, Cancelled</em>.</li>
+</ul>
+<h3>7.4 Hospital Wards &amp; Bed Matrix (<code>/beds</code>)</h3>
+<ul>
+<li>Visual matrix across 6 wards: ICU, Emergency, General Ward A (Male), General Ward B (Female), Maternity, and VIP Deluxe Suites.</li>
+<li>Live status indicators: Green (<code>Available</code>), Blue/Red (<code>Occupied</code>), Amber (<code>Cleaning / Maintenance</code>).</li>
+<li>Instant modal to admit any registered outpatient to an available bed with automatic status synchronization.</li>
+</ul>
+<h3>7.5 Digital Prescriptions (Rx) (<code>/prescriptions</code>)</h3>
+<ul>
+<li>Comprehensive clinical consultation pad with ICD-10 diagnosis tagging.</li>
+<li>Multi-medication tabular schedule with dosage, frequency, duration, and dietary directions.</li>
+<li>Diagnostic lab panels ordering with urgency designations.</li>
+<li><strong>Print Official Rx</strong> feature formatting the digital record into an official hospital letterhead with doctor credentials.</li>
+</ul>
+<h3>7.6 Pharmacy Inventory POS (<code>/pharmacy</code>)</h3>
+<ul>
+<li>Pharmaceutical catalog tracking generic names, unit packaging, and batch numbers.</li>
+<li>Automated low-stock visual badges when inventory dips below minimum threshold.</li>
+<li>Batch expiry monitoring alerting staff of drugs nearing expiration.</li>
+<li>Point-of-Sale (POS) dispense modal instantly deducting quantities from stock.</li>
+</ul>
+<h3>7.7 Consolidated Billing &amp; Invoicing (<code>/billing</code>)</h3>
+<ul>
+<li>Itemized billing aggregating physician consultation fees, daily bed rent, pharmacy bills, and diagnostic lab panels.</li>
+<li>Automated 5% healthcare service tax calculation and cashless insurance deductions.</li>
+<li>Native payment recording supporting <strong>UPI (Google Pay / PhonePe / Paytm)</strong>, Cash, Net Banking, and Ayushman Bharat PM-JAY.</li>
+</ul>
+<h3>7.8 Smart AI Clinical Intelligence Suite (<code>/ai-tools</code>)</h3>
+<ul>
+<li><strong>Interactive Symptom Triage Analyzer</strong>: Evaluates symptoms, baseline vitals, and chronic comorbidities, returning an urgency tier and directing patients to the appropriate specialist.</li>
+<li><strong>30-Day Readmission Risk Predictor</strong>: Calculates post-discharge readmission likelihood with targeted clinical prevention protocols.</li>
+<li><strong>7-Day Predictive Inpatient Bed Influx Forecast</strong>: Real-time multi-line trend chart projecting demand across ICU, General, and Emergency wards.</li>
+</ul>
+<hr />
+<h2>CHAPTER 8: CONCLUSION &amp; FUTURE SCOPE</h2>
+<h3>8.1 Key Technical Learnings &amp; Professional Competencies</h3>
+<p>The development of the Sanjeevani Smart Hospital Management System at <strong>YP Edutech</strong> provided profound practical experience and end-to-end mastery in:<br />
+- <strong>Comprehensive Python Programming &amp; Ecosystem Mastery</strong>:<br />
+  - Deep command over Python core constructs: custom exceptions, comprehension pipelines, higher-order functions, generator expressions, and context managers.<br />
+  - Object-Oriented Software Design: encapsulation, inheritance hierarchies, abstract base classes, dunder protocols, and property decorators.<br />
+  - In-depth utilization of standard libraries: <code>sqlite3</code>, <code>json</code>, <code>datetime</code>, <code>math</code>, <code>os</code>, <code>sys</code>, <code>typing</code>, <code>re</code>, and <code>hashlib</code>.<br />
+  - Production-grade third-party libraries: <code>FastAPI</code> (asynchronous routing &amp; OpenAPI), <code>Pydantic</code> (strict type parsing &amp; schema validation), <code>Uvicorn</code> (ASGI runtime), <code>Jinja2</code> (server-side templating), and <code>HTTPX</code> (automated test clients).<br />
+- <strong>Enterprise Relational Database Engineering &amp; Management</strong>:<br />
+  - Relational schema modeling and formal 3rd Normal Form (3NF) normalization to eliminate insertion, update, and deletion anomalies.<br />
+  - Complex SQL mastery: multi-table <code>JOIN</code> operations, aggregate statistical queries (<code>SUM</code>, <code>AVG</code>, <code>COUNT</code>), <code>GROUP BY</code>, <code>HAVING</code>, and nested subqueries.<br />
+  - ACID transaction guarantees ensuring atomicity across multi-step hospital transactions (pharmacy inventory decrements synchronized with bill generation).<br />
+  - Parameterized query enforcement ensuring 100% defense against SQL injection attacks.<br />
+  - SQLite optimization using <code>PRAGMA foreign_keys = ON</code> and <code>sqlite3.Row</code> factory integration.<br />
+- <strong>Asynchronous Architecture &amp; High-Performance Web Services</strong>: Transitioning from traditional synchronous Python to modern ASGI asynchronous event loops, yielding sub-50ms endpoint latencies.<br />
+- <strong>Full-Stack Clinical UI/UX &amp; Responsive Engineering</strong>: Crafting clean, hospital-grade layouts and interactive real-time telemetry monitors with HTML5, CSS3, and Chart.js without external frontend framework overhead.<br />
+- <strong>Applied Clinical Intelligence &amp; Algorithmic Triage</strong>: Designing multi-parameter clinical rule engines, natural language keyword matching for medical triage, and multi-factor risk scoring algorithms.<br />
+- <strong>Software Engineering Lifecycle &amp; Verification</strong>: Implementing end-to-end regression testing suites (<code>test_system.py</code>) achieving a 100% pass rate, coupled with Git version control discipline.</p>
+<h3>8.2 Project Milestones Achieved</h3>
+<ul>
+<li><strong>100% Zero-Error Test Execution</strong>: All page routes and API endpoints verified with automated unit tests.</li>
+<li><strong>Complete Indian Localization</strong>: Implementation of <code>₹</code> INR tariffs, UPI payment workflows, 24 specialized Indian physicians, and common Indian pharmaceuticals.</li>
+<li><strong>Zero-Dependency Architecture</strong>: Runs independently without requiring external database server installations or heavy front-end build pipelines.</li>
+</ul>
+<h3>8.3 Future Enhancements &amp; Roadmap</h3>
+<ol>
+<li><strong>ABDM / ABHA ID Integration</strong>: Connecting with India's Ayushman Bharat Digital Mission (ABDM) to fetch patient longitudinal health records via 14-digit ABHA numbers.</li>
+<li><strong>HL7 / FHIR Standards Compliance</strong>: Exporting clinical summaries and lab reports in standard FHIR JSON format for interoperability across hospital chains.</li>
+<li><strong>Automated WhatsApp / SMS OPD Queue Notifications</strong>: Sending live token updates to patients via WhatsApp/SMS so they can wait comfortably outside crowded waiting areas.</li>
+<li><strong>Native Mobile App (Flutter / Android)</strong>: Developing companion mobile applications for attending doctors to review rounds and for patients to view test reports.</li>
+</ol>
+<hr />
+<h2>📚 REFERENCES &amp; BIBLIOGRAPHY</h2>
+<ol>
+<li><strong>FastAPI Framework Documentation</strong>: Sebastián Ramírez, <em>FastAPI: Modern, Fast (High-Performance) Web Framework for Python</em>, https://fastapi.tiangolo.com/</li>
+<li><strong>Python Software Foundation</strong>: <em>Python 3.13 Language Reference &amp; Standard Library Documentation</em>, https://docs.python.org/3/</li>
+<li><strong>SQLite Consortium</strong>: <em>SQLite Relational Database Architecture &amp; PRAGMA Foreign Keys</em>, https://www.sqlite.org/</li>
+<li><strong>World Health Organization (WHO)</strong>: <em>International Statistical Classification of Diseases and Related Health Problems (ICD-10)</em>, World Health Organization, Geneva.</li>
+<li><strong>National Health Authority (NHA), Government of India</strong>: <em>Ayushman Bharat Digital Mission (ABDM) Architecture &amp; Guidelines</em>, https://abdm.gov.in/</li>
+<li><strong>Chart.js Documentation</strong>: <em>Open Source HTML5 Canvas Charting Library</em>, https://www.chartjs.org/</li>
+<li><strong>YP Edutech Courseware</strong>: <em>Advanced Full-Stack Python &amp; Data-Driven Application Engineering</em>, YP Edutech Training Curriculum (2026).</li>
+</ol>
+    </div>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+        document.querySelectorAll('pre code.language-mermaid').forEach(function(el) {
+            var container = document.createElement('div');
+            container.className = 'mermaid';
+            container.textContent = el.textContent;
+            el.parentElement.replaceWith(container);
+        });
+    </script>
+</body>
+</html>
